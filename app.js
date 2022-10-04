@@ -4,6 +4,8 @@ const session = require("express-session");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 
+const customerLoginRoutes = require("./routes/customerRoutes/loginRoutes");
+
 const connectDB = require("./database/connection");
 
 const adminDatabase = require("./models/adminModel");
@@ -14,9 +16,9 @@ const PORT = process.env.PORT || 8080;
 // mongodb connection
 connectDB();
 
-morgan("tiny");
-
 const app = express();
+
+// app.use(morgan(":method :status :url'http-version'"));
 
 app.use(function (req, res, next) {
   res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
@@ -39,6 +41,8 @@ app.set("views", "views");
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use("/", customerLoginRoutes);
 
 app.use(adminDatabase); //create admin collection (only one time)
 
