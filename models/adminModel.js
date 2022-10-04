@@ -29,7 +29,7 @@ Admin.find().then((data) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }
+  } 
 });
 
 module.exports = Admin;

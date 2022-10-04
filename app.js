@@ -5,6 +5,9 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 
 const customerLoginRoutes = require("./routes/customerRoutes/loginRoutes");
+const customerSignUpRoutes = require("./routes/customerRoutes/SignUpRoutes");
+// const customerHomeRoutes = require("./routes/customerRoutes/HomeRoutes");
+const errorController = require("./controller/404");
 
 const connectDB = require("./database/connection");
 
@@ -42,8 +45,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/Customer", customerSignUpRoutes);
 app.use("/", customerLoginRoutes);
 
+app.use(errorController.get404);
 app.use(adminDatabase); //create admin collection (only one time)
 
 app.listen(PORT, () => {
