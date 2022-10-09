@@ -21,15 +21,15 @@ exports.signUpPost = (req, res) => {
     email: req.body.email,
     phone: req.body.phone,
     password: req.body.password,
+    isBlocked: false,
   });
-
+  
   // save user in the database
   user
     .save(user)
     .then((data) => {
       //res.send(data)
-      req.session.accountCreated = true;
-      res.redirect("/");
+      res.redirect("/Customer/Verification?phone=" + req.body.phone + "&email=" + req.body.email);
     })
     .catch((err) => {
       req.session.emailExists = true;

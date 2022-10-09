@@ -81,6 +81,28 @@
         $(element).addClass('form-control-danger')
       }
     });
+    $("#addCategoryForm").validate({
+      rules: {
+        category_name: {
+          required: true,
+        },
+        category_description: {
+          required: true,
+        },
+      },
+      messages: {
+        category_name: "Please provide a category name",
+        category_description: "Please provide a category description",
+      },
+      errorPlacement: function(label, element) {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      },
+      highlight: function(element, errorClass) {
+        $(element).parent().addClass('has-danger')
+        $(element).addClass('form-control-danger')
+      }
+    });
   });
 })(jQuery);
 

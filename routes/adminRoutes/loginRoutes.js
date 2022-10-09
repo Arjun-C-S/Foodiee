@@ -1,6 +1,6 @@
 const express = require("express");
 
-const loginController = require("../../controller/customerController/loginController");
+const loginController = require("../../controller/adminController/loginController");
 
 const router = express.Router();
 
@@ -10,6 +10,5 @@ router.post("/", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
-
 
 module.exports = router;

@@ -1,6 +1,6 @@
 (function($) {
   'use strict';
-  $('#defaultconfig').maxlength({
+  $('#category_name').maxlength({
     warningClass: "badge mt-1 badge-success",
     limitReachedClass: "badge mt-1 badge-danger"
   });
@@ -23,7 +23,7 @@
     validate: true
   });
 
-  $('#maxlength-textarea').maxlength({
+  $('#category_description').maxlength({
     alwaysShow: true,
     warningClass: "badge mt-1 badge-success",
     limitReachedClass: "badge mt-1 badge-danger"

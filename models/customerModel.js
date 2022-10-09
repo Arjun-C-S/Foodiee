@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { boolean } = require("webidl-conversions");
 
 var schema = new mongoose.Schema({
   name: {
@@ -40,6 +39,15 @@ var schema = new mongoose.Schema({
       },
     },
   ],
+  verificationPhone: {
+    type: Boolean,
+  },
+  verificationEmail: {
+    type: Boolean,
+  },
+  isBlocked: {
+    type: Boolean,
+  },
   password: String,
 });
 

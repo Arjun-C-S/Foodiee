@@ -74,11 +74,18 @@
             value: true,
             visible: true,
             className: "btn btn-primary",
-            closeModal: true
+            closeModal: true,
           }
         }
-      })
-
+      }).then((data) => {
+        console.log()
+        if(data === true){
+          const id = document.getElementById('category_id').value
+          window.location = "/Admin/deleteCategory/?id=" + id ;
+        } 
+        // window.location = "redirectURL";
+    });
+    
     } else if (type === 'custom-html') {
       swal({
         content: {
@@ -98,5 +105,4 @@
       })
     }
   }
-
 })(jQuery);
