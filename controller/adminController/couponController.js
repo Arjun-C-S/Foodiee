@@ -6,7 +6,7 @@ exports.couponGet = (req, res) => {
     Coupon.find().then((couponData) => {
       if (req.session.couponAdded) {
         req.session.couponAdded = false;
-        res.render("Admin/Coupon", {
+        res.render("Admin/coupon", {
           pageTitle: "Coupons",
           couponData: couponData,
           couponAdded: true,
@@ -17,7 +17,7 @@ exports.couponGet = (req, res) => {
         });
       } else if (req.session.couponExists) {
         req.session.couponExists = false;
-        res.render("Admin/Coupon", {
+        res.render("Admin/coupon", {
           pageTitle: "Coupons",
           couponData: couponData,
           couponAdded: false,
@@ -28,7 +28,7 @@ exports.couponGet = (req, res) => {
         });
       } else if (req.session.couponUpdated) {
         req.session.couponUpdated = false;
-        res.render("Admin/Coupon", {
+        res.render("Admin/coupon", {
           pageTitle: "Coupons",
           couponData: couponData,
           couponAdded: false,
@@ -39,7 +39,7 @@ exports.couponGet = (req, res) => {
         });
       } else if (req.session.couponDeleted) {
         req.session.couponDeleted = false;
-        res.render("Admin/Coupon", {
+        res.render("Admin/coupon", {
           pageTitle: "Coupons",
           couponData: couponData,
           couponAdded: false,
@@ -49,7 +49,7 @@ exports.couponGet = (req, res) => {
           isUpdate: false,
         });
       } else {
-        res.render("Admin/Coupon", {
+        res.render("Admin/coupon", {
           pageTitle: "Coupons",
           couponData: couponData,
           couponAdded: false,
