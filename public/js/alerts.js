@@ -103,6 +103,206 @@
           className: "btn btn-primary"
         }
       })
+    } else if (type === 'block-customer') {
+      swal({
+        title: 'Are you sure?',
+        text: "You really want to block the customer",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3f51b5',
+        cancelButtonColor: '#ff4081',
+        confirmButtonText: 'Great ',
+        buttons: {
+          cancel: {
+            text: "Cancel",
+            value: null,
+            visible: true,
+            className: "btn btn-danger",
+            closeModal: true,
+          },
+          confirm: {
+            text: "OK",
+            value: true,
+            visible: true,
+            className: "btn btn-primary",
+            closeModal: true,
+          }
+        }
+      }).then((data) => {
+        console.log()
+        if(data === true){
+          const id = document.getElementById('customer_id').value
+          window.location = "/Admin/BlockCustomer/?id=" + id ;
+        } 
+        // window.location = "redirectURL";
+    });
+    
+    } else if (type === 'unblock-customer') {
+      swal({
+        title: 'Are you sure?',
+        text: "You really want to unblock the customer",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3f51b5',
+        cancelButtonColor: '#ff4081',
+        confirmButtonText: 'Great ',
+        buttons: {
+          cancel: {
+            text: "Cancel",
+            value: null,
+            visible: true,
+            className: "btn btn-danger",
+            closeModal: true,
+          },
+          confirm: {
+            text: "OK",
+            value: true,
+            visible: true,
+            className: "btn btn-primary",
+            closeModal: true,
+          }
+        }
+      }).then((data) => {
+        console.log()
+        if(data === true){
+          const id = document.getElementById('customer_id').value
+          window.location = "/Admin/unBlockCustomer/?id=" + id ;
+        } 
+        // window.location = "redirectURL";
+    });
+    
+    } else if (type === 'delete-product') {
+      swal({
+        title: 'Are you sure?',
+        text: "You really want to delete the product",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3f51b5',
+        cancelButtonColor: '#ff4081',
+        confirmButtonText: 'Great ',
+        buttons: {
+          cancel: {
+            text: "Cancel",
+            value: null,
+            visible: true,
+            className: "btn btn-danger",
+            closeModal: true,
+          },
+          confirm: {
+            text: "OK",
+            value: true,
+            visible: true,
+            className: "btn btn-primary",
+            closeModal: true,
+          }
+        }
+      }).then((data) => {
+        if(data === true){
+          const id = document.getElementById('product_id').value
+          window.location = "/Admin/deleteProduct/?id=" + id ;
+        } 
+        // window.location = "redirectURL";
+    });
+    
+    } else if (type === 'delete-categoryOffer') {
+      swal({
+        title: 'Are you sure?',
+        text: "You really want to delete this Category Offer?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3f51b5',
+        cancelButtonColor: '#ff4081',
+        confirmButtonText: 'Great ',
+        buttons: {
+          cancel: {
+            text: "Cancel",
+            value: null,
+            visible: true,
+            className: "btn btn-danger",
+            closeModal: true,
+          },
+          confirm: {
+            text: "OK",
+            value: true,
+            visible: true,
+            className: "btn btn-primary",
+            closeModal: true,
+          }
+        }
+      }).then((data) => {
+        if(data === true){
+          const id = document.getElementById('id').value
+          window.location = "/Admin/deleteCategoryOffer/?offer_id=" + id ;
+        } 
+        // window.location = "redirectURL";
+    });
+    
+    } else if (type === 'delete-productOffer') {
+      swal({
+        title: 'Are you sure?',
+        text: "You really want to delete this Product Offer?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3f51b5',
+        cancelButtonColor: '#ff4081',
+        confirmButtonText: 'Great ',
+        buttons: {
+          cancel: {
+            text: "Cancel",
+            value: null,
+            visible: true,
+            className: "btn btn-danger",
+            closeModal: true,
+          },
+          confirm: {
+            text: "OK",
+            value: true,
+            visible: true,
+            className: "btn btn-primary",
+            closeModal: true,
+          }
+        }
+      }).then((data) => {
+        if(data === true){
+          const id = document.getElementById('id').value
+          window.location = "/Admin/deleteproductOffers/?offer_id=" + id ;
+        } 
+        // window.location = "redirectURL";
+    });
+    
+    } else if (type === 'delete-coupon') {
+      swal({
+        title: 'Are you sure?',
+        text: "You really want to delete this Coupon?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3f51b5',
+        cancelButtonColor: '#ff4081',
+        confirmButtonText: 'Great ',
+        buttons: {
+          cancel: {
+            text: "Cancel",
+            value: null,
+            visible: true,
+            className: "btn btn-danger",
+            closeModal: true,
+          },
+          confirm: {
+            text: "OK",
+            value: true,
+            visible: true,
+            className: "btn btn-primary",
+            closeModal: true,
+          }
+        }
+      }).then((data) => {
+        if(data === true){
+          const id = document.getElementById('id').value
+          window.location = "/Admin/deleteCoupon/?coupon_id=" + id ;
+        } 
+        // window.location = "redirectURL";
+    });
+    
     }
-  }
+  } 
 })(jQuery);

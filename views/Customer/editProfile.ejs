@@ -1,0 +1,141 @@
+<%- include('includes/_header') %>
+    <link rel="stylesheet" href="/Customer_asset/css/vertical-layout-light/addressCss.css">
+    <link rel="stylesheet" href="/Customer_asset/css/vertical-layout-light/profilePicture.css">
+
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html -->
+            <%- include('includes/_header_navbar') %>
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper d-block">
+                <!-- partial:partials/_settings-panel.html -->
+
+
+                <!-- partial -->
+                <!-- partial:partials/_sidebar.html -->
+                <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                    <ul class="nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/Customer/home">
+                                <i class="icon-home menu-icon"></i>
+                                <span class="menu-title">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/orders">
+                                <i class="icon-notebook menu-icon"></i>
+                                <span class="menu-title">Your Orders</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/cart">
+                                <i class="icon-bag menu-icon"></i>
+                                <span class="menu-title">Cart</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/wishlist">
+                                <i class="icon-heart menu-icon"></i>
+                                <span class="menu-title">Wishlist</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                                <h3 class="font-weight-bold">Your Profile
+                                </h3>
+                                <h6 class="font-weight-normal mb-4">Go through your profile and update your data.</h6>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <form class="forms-sample" id="editProfileForm" style="display: contents;"
+                                action="/Customer/editProfile" method="post" enctype="multipart/form-data">
+                                <div class="col-md-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-12 d-flex justify-content-center mt-5">
+                                                <div class="col-3">
+                                                    <div class="avatar-upload mt-0 mb-0">
+                                                        <div class="avatar-edit">
+                                                            <input type='file' id="imageUpload" name="customer_image"
+                                                                accept=".png, .jpg, .jpeg" />
+                                                            <label for="imageUpload"></label>
+                                                        </div>
+                                                        <div class="avatar-preview">
+                                                            <% if( CustomerData[0].profile_image ) { %>
+                                                                <div id="imagePreview"
+                                                                        style="background-image: url('<%= CustomerData[0].profile_image %>');">
+                                                                </div>
+                                                            <% } else { %>
+                                                                <div id="imagePreview"
+                                                                        style="background-image: url('https://res.cloudinary.com/dzfyfd5bg/image/upload/v1666961365/defaultProfile-img_zshguv.png');">
+                                                                </div>
+                                                            <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-9">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control form-control-sm" placeholder="Enter your name" name="name"
+                                                            value="<%= CustomerData[0].name %>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control form-control-sm" placeholder="Enter your Email" name="email"
+                                                            value="<%= CustomerData[0].email %>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control form-control-sm" disabled
+                                                            value="<%= CustomerData[0].phone %>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 d-flex justify-content-between mt-5">
+                                                <div class="col-12">
+                                                    <% for(let i=0; i < CustomerData[0].Address.length ; i++) { %>
+                                                        <label class="card">
+                                                            <input name="address" class="radio" type="radio"
+                                                                value="<%= CustomerData[0].Address[i]._id %>">
+                                                            <a href="/Customer/editAddress?address_id=<%= CustomerData[0].Address[i]._id %>" class="btn btn-success btn-rounded btn-icon address-inprofile-edit">Edit</a>
+                                                            <a href="/Customer/removeAddress?address_id=<%= CustomerData[0].Address[i]._id %>" class="btn btn-danger btn-rounded btn-icon address-inprofile-delete">Delete</a>
+                                                            <span class="plan-details">
+                                                                <span class="plan-type">
+                                                                    <%= CustomerData[0].Address[i].houseName %>
+                                                                </span>
+                                                                <span>Name : <%= CustomerData[0].Address[i].name %>
+                                                                        </span>
+                                                                <span>City : <%= CustomerData[0].Address[i].city %>
+                                                                        </span>
+                                                                <span>Street : <%= CustomerData[0].Address[i].street %>
+                                                                        </span>
+                                                                <span>Landmark : <%= CustomerData[0].Address[i].landMark
+                                                                        %></span>
+                                                                <span>Phone number : <%=
+                                                                        CustomerData[0].Address[i].phoneNumber %></span>
+                                                                <span>Alternative Contact : <%=
+                                                                        CustomerData[0].Address[i].alternativePhoneNumber
+                                                                        %></span>
+                                                            </span>
+                                                        </label>
+                                                    <% } %>
+                                                    <a href="/Customer/addAddress?path=profile" class="btn btn-light" style="width: 100%; border: 0.5px solid;"> Add New Address</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" id="btn-edit-profile" class="btn btn-dark"
+                                            style="border-radius: 0px 0px 14px 14px;">Update Profile</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/Customer_asset/js/product.js"></script>
+    </body>
+
+    <%- include('includes/_footer') %>

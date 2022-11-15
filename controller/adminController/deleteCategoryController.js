@@ -1,6 +1,7 @@
 const Category = require("../../models/categoryModel");
 
 exports.deletecategoryGet = (req, res) => {
+  if(req.session.admin) {
     const id = req.query.id;
     Category.findByIdAndDelete(id)
       .then((data) => {
@@ -18,4 +19,8 @@ exports.deletecategoryGet = (req, res) => {
           message: "Could not delete User with id=" + id,
         });
       });
+  } else {
+    res.redirect('/Admin/')
+  }
+    
   };

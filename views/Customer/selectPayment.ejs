@@ -1,0 +1,311 @@
+<%- include('includes/_header') %>
+    <link rel="stylesheet" href="/Customer_asset/css/vertical-layout-light/selectPayment.css">
+    <script src="https://kit.fontawesome.com/1005d6798d.js" crossorigin="anonymous"></script>
+
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html -->
+            <%- include('includes/_header_navbar') %>
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper d-block">
+                <!-- partial:partials/_settings-panel.html -->
+
+
+                <!-- partial -->
+                <!-- partial:partials/_sidebar.html -->
+                <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/home">
+                                <i class="icon-home menu-icon"></i>
+                                <span class="menu-title">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/orders">
+                                <i class="icon-notebook menu-icon"></i>
+                                <span class="menu-title">Your Orders</span>
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/Customer/cart">
+                                <i class="icon-bag menu-icon"></i>
+                                <span class="menu-title">Cart</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/wishlist">
+                                <i class="icon-heart menu-icon"></i>
+                                <span class="menu-title">Wishlist</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="main-panel" style="width: 100%;">
+                    <div class="content-wrapper">
+                        <div class="row  justify-content-center">
+                            <div class="col-lg-6 mx-auto">
+                                <div class="card" style="border-radius: 0;">
+                                    <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
+                                        <!-- Credit card form tabs -->
+                                        <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3" style="padding-left: 10px;">
+                                            <li class="nav-item"> <a data-toggle="pill" href="#credit-card" 
+                                                    class="nav-link active "> <i class="fas fa-credit-card mr-2"></i>
+                                                    Razorpay </a> </li>
+                                            <li class="nav-item"> <a data-toggle="pill" href="#paypal"
+                                                    class="nav-link "> <i class="fab fa-paypal mr-2"></i> Paypal
+                                                </a> </li>
+                                            <li class="nav-item"> <a data-toggle="pill" href="#net-banking"
+                                                    class="nav-link "> <i
+                                                        class="fa-solid fa-money-check-dollar mr-2"></i>
+                                                    Cash on delivery
+                                                </a> </li>
+                                            <li class="nav-item"> <a data-toggle="pill" href="#wallet"
+                                                class="nav-link "> <i
+                                                    class="icon-wallet mr-2"></i>
+                                                Wallet
+                                                </a> </li>
+                                        </ul>
+                                    </div> <!-- End -->
+                                    <!-- Credit card form content -->
+                                    <div class="tab-content" style="border: 0;">
+                                        <!-- credit card info-->
+                                        <div id="credit-card" class="tab-pane fade show active pt-3">
+                                            <form action="/" method="get">
+                                                <div class="form-group"> <label for="username">
+                                                        <h6>Card Owner</h6>
+                                                    </label> <input type="text" name="username"
+                                                        placeholder="Card Owner Name" required class="form-control ">
+                                                </div>
+                                                <div class="form-group"> <label for="cardNumber">
+                                                        <h6>Card number</h6>
+                                                    </label>
+                                                    <div class="input-group"> <input type="text" name="cardNumber"
+                                                            placeholder="Valid card number" class="form-control "
+                                                            required>
+                                                        <div class="input-group-append"> <span
+                                                                class="input-group-text text-muted"> <i
+                                                                    class="fab fa-cc-visa mx-1"></i> <i
+                                                                    class="fab fa-cc-mastercard mx-1"></i> <i
+                                                                    class="fab fa-cc-amex mx-1"></i> </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-8">
+                                                        <div class="form-group"> <label><span class="hidden-xs">
+                                                                    <h6>Expiration Date</h6>
+                                                                </span></label>
+                                                            <div class="input-group"> <input type="number"
+                                                                    placeholder="MM" name="" class="form-control"
+                                                                    required> <input type="number" placeholder="YY"
+                                                                    name="" class="form-control" required> </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group mb-4"> <label data-toggle="tooltip"
+                                                                title="Three digit CV code on the back of your card">
+                                                                <h6>CVV <i class="fa fa-question-circle d-inline"></i>
+                                                                </h6>
+                                                            </label> <input type="text" required class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer"> <button type="submit" id="rzp-button1"
+                                                        data-amount="<%= Total_Amount[0].Grand_Total %>"
+                                                        class="subscribe btn btn-primary btn-block shadow-sm">
+                                                        Confirm
+                                                        Payment </button>
+                                            </form>
+                                        </div>
+                                    </div> <!-- End -->
+                                    <!-- Paypal info -->
+                                    <div id="paypal" class="tab-pane fade pt-3">
+                                        <h6 class="pb-2">Select your paypal account type</h6>
+                                        <div class="form-group "> <label class="radio-inline"> <input type="radio"
+                                                    name="optradio" checked> Domestic </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="optradio" class="ml-5">International
+                                            </label>
+                                        </div>
+                                        <p><form action="/Customer/paypal" method="post"><input type="hidden" name="Total_Amount" value="<%= Total_Amount[0].Grand_Total %>"> <button type="submit" class="btn btn-primary "><i
+                                                    class="fab fa-paypal mr-2"></i> Log into my Paypal</button></form>
+                                        </p>
+                                        <p class="text-muted"> Note: After clicking on the button, you will be
+                                            directed to a
+                                            secure gateway for payment. After completing the payment process,
+                                            you will be
+                                            redirected back to the website to view details of your order. </p>
+                                    </div> <!-- End -->
+                                    <!-- bank transfer info -->
+                                    <div id="net-banking" class="tab-pane fade pt-3">
+                                        <div class="form-group"> <label for="username">
+                                                <h6>Total Amount</h6>
+                                            </label> <input type="text" name="Total_Amount" value="<%= Total_Amount[0].Grand_Total %>"
+                                                readonly class="form-control ">
+                                        </div>
+                                        <form action="/Customer/cashOnDelivery" method="post">
+                                            <div class="form-group">
+                                                <a id="cashOnDelivery">
+                                                    <p> <button type="submit" class="btn btn-primary "><i
+                                                                class="fa-solid fa-indian-rupee-sign mr-2"></i> Proceed
+                                                            Payment</button> </p>
+                                                </a>
+                                            </div>
+                                        </form>
+                                        <p class="text-muted">Note: After clicking on the button, you will be
+                                            directed to Home Page .Your order status will be confirmed by foodiee.
+                                            After receiving the order please pay the amount to our delivery partner.
+                                            Thank you for using foodiee. </p>
+                                    </div> <!-- End -->
+
+                                    <div id="wallet" class="tab-pane fade pt-3">
+                                        <% if(isWallet > 0) { %>
+                                            <div class="form-group"> <label for="username">
+                                                <h6>Wallet Balance</h6>
+                                                </label> <input type="text" name="Wallet_Amount" value="<%= walletData[0].Wallet_Total %>"
+                                                    readonly class="form-control ">
+                                            </div>
+                                            <div class="form-group"> <label for="username">
+                                                    <h6>Total Amount</h6>
+                                                </label> <input type="text" name="Total_Amount" value="<%= Total_Amount[0].Grand_Total %>"
+                                                    readonly class="form-control ">
+                                            </div>
+                                                <% if(Total_Amount[0].Grand_Total <= walletData[0].Wallet_Total) { %>
+                                                    <div class="form-group">
+                                                        <a id="walletPayment" href="/Customer/WalletPayment">
+                                                            <p> <button type="submit" class="btn btn-primary "><i
+                                                                        class="fa-solid fa-indian-rupee-sign mr-2"></i> Proceed
+                                                                    Payment</button> </p>
+                                                        </a>
+                                                    </div>
+                                                <% } else { %>
+                                                    <div class="form-group">
+                                                        <a id="">
+                                                            <p> <button class="btn btn-primary" ><i
+                                                                        class="fa-solid fa-indian-rupee-sign mr-2"></i>Not Enough Balance</button> </p>
+                                                        </a>
+                                                    </div>
+                                                <% } %>
+                                        <% } else { %>
+                                            <div class="form-group"> <label for="username">
+                                                <h6>Wallet Balance</h6>
+                                                </label> <input type="text" name="Wallet_Amount" value="0"
+                                                    readonly class="form-control ">
+                                            </div>
+                                            <div class="form-group"> <label for="username">
+                                                    <h6>Total Amount</h6>
+                                                </label> <input type="text" name="Total_Amount" value="<%= Total_Amount[0].Grand_Total %>"
+                                                    readonly class="form-control ">
+                                            </div>
+                                            <div class="form-group">
+                                                <a id="">
+                                                    <p> <button class="btn btn-primary"><i
+                                                                class="fa-solid fa-indian-rupee-sign mr-2"></i>Not Enough Balance</button> </p>
+                                                </a>
+                                            </div>
+                                        <% } %>
+                                        <p class="text-muted">Note: After clicking on the button, you will be
+                                            directed to Home Page .Your order status will be confirmed by foodiee.
+                                            After receiving the order please pay the amount to our delivery partner.
+                                            Thank you for using foodiee. </p>
+                                    </div> <!-- End -->
+                                    <!-- End -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- page-body-wrapper ends -->
+            </div>
+    </body>
+
+    <%- include('includes/_footer') %>
+
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+            var orderId;
+            var amount = $("#rzp-button1").data('amount');
+            $(document).ready(function () {
+                // console.log(amount);
+                var settings = {
+                    "url": "/Customer/GenerateOrder",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                        "amount": amount
+                    }),
+                };
+
+                //creates new orderId everytime
+                $.ajax(settings).done(function (response) {
+
+                    orderId = response.orderId;
+                    // console.log(orderId);
+                    $("button").show();
+                });
+            });
+
+            document.getElementById('rzp-button1').onclick = function (e) {
+                var options = {
+                    "key": "rzp_test_lcKTIyLLpGzGaB", // Enter the Key ID generated from the Dashboard
+                    "amount": amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Foodiee",
+                    "description": "Test Transaction",
+                    "image": "https://example.com/your_logo",
+                    "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                    "handler": function (response) {
+                        // alert(response.razorpay_payment_id);
+                        // alert(response.razorpay_order_id);
+                        // alert(response.razorpay_signature)
+
+                        var settings = {
+                            "url": "/Customer/verifyPayment",
+                            "method": "POST",
+                            "timeout": 0,
+                            "headers": {
+                                "Content-Type": "application/json"
+                            },
+                            "data": JSON.stringify({ response }),
+                        }
+                        $.ajax(settings).done(function (response) {
+                            console.log('verification done ' + response.signatureIsValid);
+                            if(response.signatureIsValid) {
+                                window.location = '/Customer/orders';
+                            } else {
+                                window.location = '/Customer/cart';
+                            }
+                            // window.location = '/Customer/orders';
+                        });
+                    },
+                    "prefill": {
+                        "name": "Arjun C S",
+                        "email": "arjun@example.com",
+                        "contact": "9999999999"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.on('payment.failed', function (response) {
+                    rzp1.close();
+                    showSwal('razorpay-faliure')
+                    // alert(response.error.code);
+                    // alert(response.error.description);
+                    // alert(response.error.source);
+                    // alert(response.error.step);
+                    // alert(response.error.reason);
+                    // alert(response.error.metadata.order_id);
+                    // alert(response.error.metadata.payment_id);
+                });
+                rzp1.open();
+                e.preventDefault();
+            }
+
+        
+        </script>

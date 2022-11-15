@@ -1,0 +1,337 @@
+<%- include('includes/_header') %>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+
+      <%- include('includes/_header_navbar') %>
+
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper d-block">
+          <!-- partial:partials/_settings-panel.html -->
+
+
+          <!-- partial -->
+          <!-- partial:partials/_sidebar.html -->
+          <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="/Customer/home">
+                  <i class="icon-home menu-icon"></i>
+                  <span class="menu-title">Home</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Customer/orders">
+                  <i class="icon-notebook menu-icon"></i>
+                  <span class="menu-title">Your Orders</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Customer/cart">
+                  <i class="icon-bag menu-icon"></i>
+                  <span class="menu-title">Cart</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Customer/wishlist">
+                  <i class="icon-heart menu-icon"></i>
+                  <span class="menu-title">Wishlist</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <a href="/Customer/cart">
+            <div id="settings-trigger">
+              <div class="itemIncartCount">
+                <span id="itemIncartCount"><%= inCart.length %></span>
+              </div>
+              <i class="ti-settings mdi mdi-cart-outline" style="padding-top: 3px; animation: none; font-size: 23px;">
+              </i>
+            </div>
+          </a>
+          <div class="col-lg-12 stretch-card p-0">
+            <div class="owl-carousel owl-theme full-width">
+              <div class="item">
+                <div class="card text-white">
+                  <img class="card-img" src="/Customer_asset/img/banner-3.webp" alt="Card image"
+                    style="border-radius: 0;">
+                  <div class="card-img-overlay d-flex">
+                    <div class="text-center w-100" style="padding-top: 20%;">
+                      <h3 class="banner-heading">Welcome to<br><span
+                          style="color: #F2C64D; font-family: 'Pacifico', cursive; font-size: 100px;">Foodiee</span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="card text-white">
+                  <img class="card-img" src="/Customer_asset/img/banner-2.jpg" alt="Card image"
+                    style="border-radius: 0;">
+                  <div class="card-img-overlay d-flex">
+                    <div class="text-center w-100" style="padding-top: 20%;">
+                      <h3 class="banner-heading">Enjoy Our <br><span style="color: #F2C64D"> Delicious Meals</span></h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="card text-white">
+                  <img class="card-img" src="/Customer_asset/img/banner-1.jpg" alt="Card image"
+                    style="border-radius: 0;">
+                  <div class="card-img-overlay d-flex">
+                    <div class="text-center w-100" style="padding-top: 20%;">
+                      <h3 class="banner-heading"><span style="color: #F2C64D"> Tasty & Delicious</span> <br> food</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- partial -->
+          <div class="main-panel" style="width: 100%;">
+            <div class="content-wrapper">
+              <div class="row">
+                <div class="col-md-12 grid-margin">
+                  <div class="row">
+                    <div class="col-7 mb-4 mb-xl-0">
+                      <h2 class="font-weight-bold">Welcome <%= Customer_data[0].name %>,</h2>
+                      <h5>Take a tour through our today's menu and enjoy your day...</h5>
+                    </div>
+                    <div class="col-5 text-right align-self-end">
+                      <label class="dropdown">
+                        <div class="dd-button" id="category-button">
+                          Choose Category
+                        </div>
+                        <input type="checkbox" class="dd-input" id="test">
+                        <ul class="dd-menu">
+                            <li onclick="filter('ALL')">All Categories</li>
+                            <hr class="m-0">
+                          <% for ( i = 0; i < Category.length; i++ ) { %>
+                            <li id="<%= Category[i]._id %>" onclick="filter('<%= Category[i]._id %>' , '<%= Category[i].Category_name %>')"><%= Category[i].Category_name %></li>
+                            <hr class="m-0">
+                          <% } %>
+                        </ul>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- partial -->
+              <div class="shell p-0" id="product-cards">
+                <div class="container-fluid p-0">
+                  <div class="row">
+                    <% for(let i=0; i < products.length; i++) { %>
+                      <div class="col-md-3" id="product-card-<%= products[i]._id %>">
+                        <div class="wsk-cp-product">
+                          <% let minPricetag = Math.min(products[i].product_price , products[i].categoryOfferPrice , products[i].productOfferPrice)
+                              if(minPricetag < products[i].product_price) { %>
+                            <i class="mdi mdi-sale offertag"></i>
+                          <% } %>
+                          <div class="wsk-cp-img">
+                            <img
+                              src="<%= products[i].product_image[0] %>"
+                              alt="Product" class="img-responsive" />
+                          </div>
+                          <div class="wsk-cp-text">
+                            <div id="" class="category">
+                              <% if(products[i].product_quantity > 0) { %>
+                                <% let itemInCart=false; iteminStock=true; for(let k=0; k < inCart.length; k++) {
+                                  if(inCart[k].cartProduct.product_name===products[i].product_name) { itemInCart=true } }
+                                  if(itemInCart){ %>
+                                  <span style="cursor: pointer;background-color: green;" id="addtocart" name="addtocart"
+                                    data-id="<%= products[i]._id %>">Added to
+                                    cart %></span>
+                                  <% } else { %>
+                                    <span style="cursor: pointer;" id="addtocart" name="addtocart"
+                                      data-id="<%= products[i]._id %>">Add to
+                                      cart</span>
+                                  <% } %>
+                              <% } else { %>
+                                <span style="background-color: red;" >Out of Stock %></span>
+                              <% } %>
+                            </div>
+                            <div class="title-product">
+                              <h3>
+                                <%= products[i].product_name %>
+                              </h3>
+                            </div>
+                            <div class="description-prod">
+                              <p>
+                                <%= products[i].product_description %>
+                              </p>
+                            </div>
+                            <div class="card-footer">
+                              <% let minPrice = Math.min(products[i].product_price , products[i].categoryOfferPrice , products[i].productOfferPrice)
+                              if(minPrice < products[i].product_price) { %>
+                                <div class="wcf-left"><span class="price">Rs : <span class="before-offer"><%= products[i].product_price %></span> <%= minPrice %></span>
+                              <% } else { %>
+                              <div class="wcf-left"><span class="price">Rs : <%= products[i].product_price %></span>
+                              <% } %>
+                              </div>
+                              <div class="wcf-right" style="cursor: pointer;">
+                                <% let itemInWishlist=false; for(let k=0; k < inWishlist.length; k++) {
+                                  if(inWishlist[k].wishlistProduct.product_name===products[i].product_name) {
+                                  itemInWishlist=true } } if(itemInWishlist){ %>
+                                  <a class="buy-btn" id="addtowishlist" data-id="<%= products[i]._id %>"
+                                    style="color: white;background-color: #FF9800;">
+                                    <i class="fa fa-heart-o" style="padding-top: 9px;"></i>
+                                  </a>
+                                  <% } else { %>
+                                    <a class="buy-btn" id="addtowishlist" data-id="<%= products[i]._id %>"
+                                      style="color: black">
+                                      <i class="fa fa-heart-o" style="padding-top: 9px;"></i>
+                                    </a>
+                                    <% } %>
+                              </div>
+                              <div class="wcf-right" style="padding-right: 20px;cursor: pointer"><a href="/Customer/viewProduct?prod_id=<%= products[i]._id %>" class="buy-btn"><i
+                                    class="icon-eye" style="padding-top: 9px;"></i></a></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <% } %>
+                  </div>
+                </div>
+              </div>
+              <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+          </div>
+          <!-- container-scroller -->
+        </div>
+        <div id="AddToCartSuccesstoast">
+          <span>Item added to Cart</span>
+        </div>
+        <div id="RemoveFromCartSuccesstoast">
+          <span>Item Removed from Cart</span>
+        </div>
+        <div id="AddToWishlistSuccesstoast">
+          <span>Item added to Wishlist</span>
+        </div>
+        <div id="RemoveFromWishlistSuccesstoast">
+          <span>Item Removed from Wishlist</span>
+        </div>
+    </div>
+  </body>
+
+  <%- include('includes/_footer') %>
+
+    <script>
+      $(document).on("click", "#addtocart", function () {
+        let id = $(this).data('id');
+        let span_id = $(this);
+        // console.log(span_id[0].innerText);
+        if (span_id[0].innerText === "Add to cart") {
+          // showCartAddedSuccessToast();
+          $.ajax({
+            url: '/Customer/addToCart',
+            method: 'PATCH',
+            contentType: "application/json",
+            data: JSON.stringify({ product_id: id }),
+            success: function (res) {
+              AddToCartSuccesstoast()
+              // console.log('success executed');
+              // console.log(span_id[0]);
+              span_id[0].innerText = "Added to cart"
+              span_id[0].style.backgroundColor = 'green'
+              span_id[0].style.border = '0'
+              let cartCount = document.getElementById('itemIncartCount')
+              cartCount.innerText = Number(cartCount.innerText) + 1
+              // console.log(cartCount.innerText);
+            }
+          })
+        } else {
+          // showCartRemoveWarningToast();
+          $.ajax({
+            url: '/Customer/removeFromCart',
+            method: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify({ product_id: id }),
+            success: function (res) {
+              console.log('success executed');
+              RemoveFromCartSuccesstoast()
+              console.log(span_id[0]);
+              span_id[0].innerText = "Add to cart"
+              span_id[0].style.backgroundColor = '#212121'
+              span_id[0].style.border = '1px solid #313131'
+              let cartCount = document.getElementById('itemIncartCount')
+              cartCount.innerText = Number(cartCount.innerText) - 1
+            }
+          })
+        }
+      });
+      $(document).on("click", "#addtowishlist", function () {
+        console.log('wishlist clicked');
+        let id = $(this).data('id');
+        let anchor_id = $(this);
+        let color = anchor_id[0].attributes.style.nodeValue.split(':')
+        let colorOfa = color[1].split(';');
+        // console.log(colorOfa[0]);
+        if (colorOfa[0] === ' black') {
+          // console.log('equal');
+          anchor_id[0].style.backgroundColor = '#FF9800'
+          anchor_id[0].style.color = 'white'
+          // showWishlistAddedSuccessToast();
+          $.ajax({
+            url: '/Customer/addToWishlist',
+            method: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify({ product_id: id }),
+            success: function (res) {
+              AddToWishlistSuccesstoast()
+              console.log(res);
+            }
+          })
+        } else {
+          anchor_id[0].style.backgroundColor = 'transparent'
+          anchor_id[0].style.color = 'black'
+          // showWishlistRemoveWarningToast();
+          // console.log('not equal');
+          $.ajax({
+            url: '/Customer/removeFromWishlist',
+            method: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify({ product_id: id }),
+            success: function (res) {
+              RemoveFromWishlistSuccesstoast()
+              console.log(res);
+            }
+          })
+        }
+      })
+
+
+      function filter(idName,category_name) {
+        let category_id = idName
+        $.ajax({
+            url: '/Customer/homeFilterCategory',
+            method: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify({ category_id: category_id }),
+            success: function (res) {
+              console.log(res);
+              for(let i = 0; i < res.productsToHide.length; i++) {
+                let p_id = res.productsToHide[i]._id
+                let p_card = document.getElementById('product-card-'+p_id)
+                p_card.style.display = 'none'
+              }
+              for(let i = 0; i < res.productsToShow.length; i++) {
+                let p_id = res.productsToShow[i]._id
+                let p_card = document.getElementById('product-card-'+p_id)
+                p_card.style.display = 'block'
+              }
+              if(idName == 'ALL') {
+                document.getElementById('category-button').innerText = 'Choose Category'
+              } else {
+                document.getElementById('category-button').innerText = category_name
+              }
+            }
+          })
+      }
+
+      
+    
+
+    </script>
+    

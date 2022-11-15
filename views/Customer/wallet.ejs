@@ -1,0 +1,145 @@
+<%- include('includes/_header') %>
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html -->
+            <%- include('includes/_header_navbar') %>
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper d-block">
+                <!-- partial:partials/_settings-panel.html -->
+
+
+                <!-- partial -->
+                <!-- partial:partials/_sidebar.html -->
+                <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/home">
+                                <i class="icon-home menu-icon"></i>
+                                <span class="menu-title">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/orders">
+                                <i class="icon-notebook menu-icon"></i>
+                                <span class="menu-title">Your Orders</span>
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/Customer/cart">
+                                <i class="icon-bag menu-icon"></i>
+                                <span class="menu-title">Cart</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/wishlist">
+                                <i class="icon-heart menu-icon"></i>
+                                <span class="menu-title">Wishlist</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="main-panel" style="width: 100%;">
+                    <div class="content-wrapper">
+                        <% if(isWallet > 0) { %>
+                            <div class="container d-flex flex-wrap ">
+                                <div class="col-4 p-0">
+                                    <%- include('includes/_wallet') %>
+                                </div>
+                                <div class="col-8 p-0">
+                                    <div class="wallet-amount-banner">
+                                        <div class="wallet-amount">₹<%= WalletData[0].Wallet_Total %></div>
+                                        <div class="wallet-amount-foodiee-text">Current <a href="/Customer/Home" class="wallet-foodiee">Foodiee</a> Wallet Balance.</div>
+                                    </div>
+                                </div>
+                                <div class="col-12 pt-5 pr-0 pl-0">
+                                    <div class="card wallet-order-table">
+                                        <h4 class="card-title pt-3 pb-3 mb-0 wallet-order-summary-heading">Wallet History</h4>
+                                        <div class="card-body p-0">
+                                            <div id="cartTableDiv" class="table-sorter-wrapper col-lg-12 table-responsive p-0">
+                                                <table id="cartTable" class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">Order Id</th>
+                                                            <th class="sortStyle">Refunded Status</th>
+                                                            <th class="sortStyle">Refunded Amount</th>
+                                                            <th class="sortStyle">Refunded Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% for(let i = 0; i < WalletData.length ; i++) { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= WalletData[i].Transactions.Order_id %>
+                                                                </td>
+                                                                <td>
+                                                                    <% if( WalletData[i].Transactions.Status === "PURCHASED" ) { %>
+                                                                        <label class="badge badge-warning">Purchased</label>
+                                                                    <% } else if ( WalletData[i].Transactions.Status === "REFUNDED" ) { %>
+                                                                        <label class="badge badge-success">Refunded</label>
+                                                                    <% } else if ( WalletData[i].Transactions.Status === "CREDITED" ) { %>
+                                                                        <label class="badge badge-success">Credited</label>
+                                                                    <% } %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= WalletData[i].Transactions.Amount %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= WalletData[i].Transactions.Date %>
+                                                                </td>
+                                                            </tr>
+                                                        <% } %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } else { %>
+                            <div class="container d-flex flex-wrap ">
+                                <div class="col-4 p-0">
+                                    <%- include('includes/_wallet') %>
+                                </div>
+                                <div class="col-8 p-0">
+                                    <div class="wallet-amount-banner">
+                                        <div class="wallet-amount">₹0</div>
+                                        <div class="wallet-amount-foodiee-text">Current <a href="/Customer/Home" class="wallet-foodiee">Foodiee</a> Wallet Balance.</div>
+                                    </div>
+                                </div>
+                                <div class="col-12 pt-5 pr-0 pl-0">
+                                    <div class="card wallet-order-table">
+                                        <h4 class="card-title pt-3 pb-3 mb-0 wallet-order-summary-heading">Wallet History</h4>
+                                        <div class="card-body p-0">
+                                            <div id="cartTableDiv" class="table-sorter-wrapper col-lg-12 table-responsive p-0">
+                                                <table id="cartTable" class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">Order Id</th>
+                                                            <th class="sortStyle">Refunded Status</th>
+                                                            <th class="sortStyle">Refunded Amount</th>
+                                                            <th class="sortStyle">Refunded Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="4" style="text-align: center;background-color: #d6d6da;">
+                                                                No Transaction 
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+                <!-- page-body-wrapper ends -->
+            </div>
+    </body>
+
+    <%- include('includes/_footer') %>
+
+        

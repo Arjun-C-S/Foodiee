@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 var schema = new mongoose.Schema({
+  profile_image: {
+    type: String,
+  },
   name: {
     type: String,
     required: true,
@@ -16,16 +19,19 @@ var schema = new mongoose.Schema({
   },
   Address: [
     {
-      fullname: {
+      name: {
         type: String,
       },
       phoneNumber: {
-        type: Number,
+        type: String,
       },
-      pinCode: {
-        type: Number,
+      alternativePhoneNumber: {
+        type: String,
       },
       city: {
+        type: String,
+      },
+      street: {
         type: String,
       },
       houseName: {
@@ -48,7 +54,14 @@ var schema = new mongoose.Schema({
   isBlocked: {
     type: Boolean,
   },
-  password: String,
+  password: {
+    type: String,
+    required: true,
+  },
+  referralCode: {
+    type: String,
+    required: true,
+  },
 });
 
 const Customer = mongoose.model("Customer", schema);

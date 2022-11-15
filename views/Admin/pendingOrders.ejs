@@ -1,0 +1,186 @@
+<%- include('includes/_header') %>
+
+<body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <%- include('includes/_header_navbar') %>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        
+        
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/Admin/home">
+                <i class="icon-grid menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#orders" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-book-open menu-icon"></i>
+                <span class="menu-title">Orders</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="orders">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/pendingOrders">Pending Orders</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/orderProgress">Order Progress</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/completedOrders">Completed Orders</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-screen-desktop menu-icon"></i>
+                <span class="menu-title">Products</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/viewProducts">View Products</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/addProducts">Add Products</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Admin/category">
+                <i class=" icon-direction menu-icon"></i>
+                <span class="menu-title">Category</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#offers" aria-expanded="false" aria-controls="offers">
+                <i class="icon-badge menu-icon"></i>
+                <span class="menu-title">Offers</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="offers">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/productOffers">Product Offers</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/categoryOffers">Category Offers</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Admin/Coupons">
+                <i class="fa fa-money menu-icon"></i>
+                <span class="menu-title">Coupons</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Admin/viewCustomer">
+                <i class="icon-people menu-icon"></i>
+                <span class="menu-title">Customers</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Admin/salesReportToday">
+                <i class=" icon-basket menu-icon"></i>
+                <span class="menu-title">Sales</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">
+                <i class=" icon-notebook menu-icon"></i>
+                <span class="menu-title">Report</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+            <div class="main-panel">
+              <% if(pendingOrders.length != 0) { %>
+                <div class="content-wrapper">
+                    <% if(orderRejected) { %>
+                      <div class="form-group">
+                        <div class="alert alert-warning" role="alert">
+                          Order Rejected Successfully !!!
+                        </div>
+                      </div>
+                    <% } %>
+                    <% if(orderAccepted) { %>
+                      <div class="form-group">
+                        <div class="alert alert-success" role="alert">
+                          Order Acceped Successfully !!!
+                        </div>
+                      </div>
+                    <% } %>
+                    <% for(var i=0; i < pendingOrders.length; i++){ %>
+                        <div class="col-lg-12 grid-margin stretch-card p-0">
+                            <div class="card" style="border: 4px solid #2489fb;">
+                                <div class="card-body">
+                                    <h4 class="card-title">Order : <%= i+1 %></h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Image
+                                                    </th>
+                                                    <th>
+                                                        Product
+                                                    </th>
+                                                    <th>
+                                                        Quantity
+                                                    </th>
+                                                    <th>
+                                                        Unit Price
+                                                    </th>
+                                                    <th>
+                                                        Payment Status
+                                                    </th>
+                                                    <th>
+                                                        Order Status
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for(var j=0; j < pendingOrders[i].Product.length; j++){ %>
+                                                    <tr>
+                                                        <td class="py-1">
+                                                            <img src="<%= pendingOrders[i].Product[j].product_image[0] %>"
+                                                                alt="<%= pendingOrders[i].Product[j].product_name %>" />
+                                                        </td>
+                                                        <td>
+                                                            <%= pendingOrders[i].Product[j].product_name %>
+                                                        </td>
+                                                        <td>
+                                                            <%= pendingOrders[i].Product[j].product_quantity %>
+                                                        </td>
+                                                        <td>
+                                                            <%= pendingOrders[i].Product[j].product_price %>
+                                                        </td>
+                                                        <td>
+                                                          <% if( pendingOrders[i].Payment_Status === "PENDING" ) { %>
+                                                            <label class="badge badge-warning">Pending</label>
+                                                          <% } else { %>
+                                                            <label class="badge badge-success">Completed</label>
+                                                          <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <label class="badge badge-warning">Pending</label>
+                                                        </td>
+                                                    </tr>
+                                                <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <a href="/Admin/viewOrderDetails?id=<%= pendingOrders[i]._id %>"  class="btn btn-info" style="border-radius: 0px 0px 14px 14px;">View Order Details</a>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+              <% } else { %>
+                <%- include('includes/_emptyOrders') %>
+              <% } %>
+            </div>
+      </div>
+      
+    </div>
+  </body>
+
+<%- include('includes/_footer') %>

@@ -3,76 +3,8 @@
 <body>
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
-      <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo mr-5" href=""><img src="/img/main_logo.png" class="mr-2" style="height: 40px;" alt="logo"/></a>
-          <a class="navbar-brand brand-logo-mini" href=""><img src="/img/mini-logo.png" style="width: auto;height: 45px;" alt="logo"/></a>
-        </div>
-        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-            <span class="icon-menu"></span>
-          </button>
-          <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item dropdown">
-              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                <i class="icon-bell mx-0 header-icon-big"></i>
-                <span class="count"></span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-success">
-                      <i class="ti-info-alt mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                    <p class="font-weight-light small-text mb-0 text-muted">
-                      Just now
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-warning">
-                      <i class="ti-settings mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">Settings</h6>
-                    <p class="font-weight-light small-text mb-0 text-muted">
-                      Private message
-                    </p>
-                  </div>
-                </a>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-info">
-                      <i class="ti-user mx-0"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content">
-                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                    <p class="font-weight-light small-text mb-0 text-muted">
-                      2 days ago
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </li>
-            <div class="d-flex admin-profile">
-              <a href="" style="text-decoration: none;"><img class="admin-profile-img" src="/img/profile-photo.png" alt="user"></a>
-            </div>
-            <div class="d-flex logout-box">
-              <a href="/Admin/logout" style="text-decoration: none;"><i class="ti-power-off text-primary header-icon-big"></i></a>
-            </div>
-          </ul>
-          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-            <span class="icon-menu"></span>
-          </button>
-        </div>
-      </nav>
+      <%- include('includes/_header_navbar') %>
+
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_settings-panel.html -->
@@ -89,10 +21,18 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">
+              <a class="nav-link" data-toggle="collapse" href="#orders" aria-expanded="false" aria-controls="ui-basic">
                 <i class="icon-book-open menu-icon"></i>
                 <span class="menu-title">Orders</span>
+                <i class="menu-arrow"></i>
               </a>
+              <div class="collapse" id="orders">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/pendingOrders">Pending Orders</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/orderProgress">Order Progress</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/completedOrders">Completed Orders</a></li>
+                </ul>
+              </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -102,8 +42,8 @@
               </a>
               <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="">View Products</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="">Add Products</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/viewProducts">View Products</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/addProducts">Add Products</a></li>
                 </ul>
               </div>
             </li>
@@ -114,13 +54,32 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">
+              <a class="nav-link" data-toggle="collapse" href="#offers" aria-expanded="false" aria-controls="offers">
+                <i class="icon-badge menu-icon"></i>
+                <span class="menu-title">Offers</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="offers">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/productOffers">Product Offers</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/Admin/categoryOffers">Category Offers</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Admin/Coupons">
+                <i class="fa fa-money menu-icon"></i>
+                <span class="menu-title">Coupons</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Admin/viewCustomer">
                 <i class="icon-people menu-icon"></i>
                 <span class="menu-title">Customers</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">
+              <a class="nav-link" href="/Admin/salesReportToday">
                 <i class=" icon-basket menu-icon"></i>
                 <span class="menu-title">Sales</span>
               </a>
@@ -137,14 +96,203 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="row">
-              <div class="col-md-12 grid-margin">
+              <div class="col-md-12 grid-margin mb-0">
                 <div class="row">
                   <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                     <h3 class="font-weight-bold">Welcome <%= adminName %></h3>
-                    <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6>
+                    <h6 class="font-weight-normal mb-0">All systems are running smoothly!</h6>
+                  </div>
+                </div>
+                <div class="row mt-5">
+                  <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card tale-bg">
+                      <div class="card-people mt-auto">
+                        <img src="/img/people.svg" alt="people">
+                        <div class="weather-info">
+                          <div class="d-flex">
+                            <div>
+                              <h2 class="mb-0 font-weight-normal"><img src="/img/main_logo.png" style="padding-bottom: 20px;width: 260px;"></i></h2>
+                            </div>
+                            <div class="ml-2">
+                              <h4 class="location font-weight-normal"></h4>
+                              <h6 class="font-weight-normal"></h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 grid-margin transparent">
+                    <div class="row">
+                      <div class="col-md-6 mb-4 stretch-card transparent">
+                        <div class="card card-tale">
+                          <div class="card-body">
+                            <p class="mb-4">Today’s Bookings</p>
+                            <p class="fs-30 mb-2"><%= TodaysBookingCount %></p>
+                            <p>&nbsp;</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-4 stretch-card transparent">
+                        <div class="card card-dark-blue">
+                          <div class="card-body">
+                            <p class="mb-4">Total Bookings</p>
+                            <p class="fs-30 mb-2"><%= TotalBookingCount %></p>
+                            <p>&nbsp;</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                        <div class="card card-light-blue">
+                          <div class="card-body">
+                            <p class="mb-4">Number of Customers</p>
+                            <p class="fs-30 mb-2"><%= NumberOfCustomers %></p>
+                            <p>&nbsp;</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 stretch-card transparent">
+                        <div class="card card-light-danger">
+                          <div class="card-body">
+                            <p class="mb-4">Total Revenue</p>
+                            <p class="fs-30 mb-2"><%= Total_Revenue %></p>
+                            <p>&nbsp;</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <p class="card-title">Order Details</p>
+                      <p class="font-weight-500">Order details with in the past 7 days. The graph shows how much revenue is generated in each day for the past 7 day and compare with previous week revenue</p>
+                      <div class="d-flex flex-wrap mb-3">
+                        <div class="mr-5 mt-3">
+                          <p class="text-muted">Order value</p>
+                          <% let sum = Total_Revenue_Past_Week.reduce((partialSum, a) => partialSum + a, 0); 
+                            if(sum > 1000) {
+                              sum = sum / 1000 
+                              sum = Math.round(sum * 100) / 100
+                              sum = sum + "k"
+                            } %>
+                          <h3 class="text-primary fs-30 font-weight-medium"><%= sum %></h3>
+                        </div>
+                        <div class="mr-5 mt-3">
+                          <p class="text-muted">Orders</p>
+                          <h3 class="text-primary fs-30 font-weight-medium"><%= orderCountinthisWeek %></h3>
+                        </div>
+                        <div class="mr-5 mt-3">
+                          <% if(per_increase_inSales != 0) { %>
+                            <p class="text-muted">Profit</p>
+                            <h3 class="text-primary fs-30 font-weight-medium"><%= Math.round(per_increase_inSales) %>%</h3>
+                          <% } else { %>
+                            <p class="text-muted">Loss</p>
+                            <h3 class="text-primary fs-30 font-weight-medium"><%= Math.round(per_decrease_inSales)%>%</h3>
+                          <% } %>
+                        </div>
+                        <div class="mt-4">
+                          <ul class="1-legend" style="list-style-type: none;">
+                            <li>
+                              <span style="background-color: #4747A1;width: 1.562rem;height: 0.312rem;margin-right: 0.4rem;display: inline-block;font-size: 0.875rem;align-items: center;border-radius: 3px;"></span>
+                              Prev week sale
+                            </li>
+                            <li>
+                              <span style="background-color: #F09397;width: 1.562rem;height: 0.312rem;margin-right: 0.4rem;display: inline-block;font-size: 0.875rem;align-items: center;border-radius: 3px;"></span>
+                              This week sale
+                            </li>
+                          </ul>
+                        </div> 
+                      </div>
+                      <canvas id="order-chart"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                     <div class="d-flex justify-content-between">
+                      <p class="card-title">Payment Report</p>
+                     </div>
+                      <p class="font-weight-500">Analyze which payment method user prefers and which payment method generate more revenue in the last 6 months.</p>
+                      <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                      <canvas id="sales-chart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card position-relative">
+                    <div class="card-body">
+                      <div id="detailedReports" class="carousel slide detailed-report-carousel position-static pt-2" data-ride="carousel">
+                        <div class="carousel-inner">
+                          <input type="hidden" value="<%= CategoryDetails.length %>" id="CategoryLength">
+                          <% for ( let i = 0; i < CategoryDetails.length; i++) { %>
+                            <div class="carousel-item <% if(i === 0) { %> active <% } %>">
+                              <div class="row">
+                                <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
+                                  <div class="ml-xl-4 mt-3">
+                                  <p class="card-title">Detailed Category Reports</p>
+                                    <h1 class="text-primary"><%= CategoryDetails[i].Total_Revenue %></h1>
+                                    <h3 class="font-weight-500 mb-xl-4 text-primary"><%= CategoryDetails[i].Category_name %></h3>
+                                    <p class="mb-2 mb-xl-0">Following graph shows how much product is saled in total with respect to its category and also the revenue genrated by each category.</p>
+                                  </div>  
+                                </div>
+                                <div class="col-md-12 col-xl-9">
+                                  <div class="row">
+                                    <div class="col-md-6 border-right">
+                                      <div class="table-responsive mb-3 mb-md-0 mt-3">
+                                        <table class="table table-borderless report-table">
+                                          <% for(let j = 0 ,k = 0; j < productData.length && k < 6 ; j++) {
+                                            if(productData[j].Category_name === CategoryDetails[i].Category_name) { %>
+                                              <tr>
+                                                <td class="text-muted"><%= productData[j]._id.product %></td>
+                                                <td class="w-100 px-0">
+                                                  <div class="progress progress-md mx-4">
+                                                    <%let prof_per =  Math.round(productData[j].Total_Revenue * 100 / CategoryDetails[i].Total_Revenue) %>
+                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: <%= Number(prof_per) %>%" aria-valuenow="<%= prof_per %>" aria-valuemin="0" aria-valuemax="100"></div>
+                                                  </div>
+                                                </td>
+                                                <td><h5 class="font-weight-bold mb-0"><%= Math.round(productData[j].Total_Revenue * 100 / CategoryDetails[i].Total_Revenue) %></h5></td>
+                                              </tr>
+                                          <% k++ } }%>
+                                        </table>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 mt-3">
+                                      <canvas id="north-america-chart-<%= i %>"></canvas>
+                                      <div id="north-america-legend-<%= i %>"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% } %>
+                        </div>
+                        <a class="carousel-control-prev" href="#detailedReports" role="button" data-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#detailedReports" role="button" data-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+
             </div>
           <!-- partial -->
         </div>
@@ -157,3 +305,730 @@
   </body>
 
 <%- include('includes/_footer') %>
+
+
+<script>
+    (function($) {
+    'use strict';
+    $(function() {
+      if ($("#order-chart").length) {
+        // console.log('<%= Total_Revenue_Past_Week %>');
+        let Dayarray = '<%= backsevendays %>'.split(',')
+        let RevenuePerDay = '<%= Total_Revenue_Past_Week %>'.split(',')
+        let RevenuePerDaynumberArray = []
+        for (let i = 0; i < RevenuePerDay.length; i++) {
+          RevenuePerDaynumberArray.push(parseInt(RevenuePerDay[i]));
+        }
+        let largest1 = RevenuePerDaynumberArray[0]
+        for (let i = 0; i < RevenuePerDaynumberArray.length; i++) {
+          if(largest1 < RevenuePerDaynumberArray[i]){
+            largest1 = RevenuePerDaynumberArray[i]
+          }
+        }
+        let second_RevenuePerDay = '<%= Total_Revenue_second_Past_Week %>'.split(',')
+        let second_RevenuePerDaynumberArray = []
+        for (let i = 0; i < second_RevenuePerDay.length; i++) {
+          second_RevenuePerDaynumberArray.push(parseInt(second_RevenuePerDay[i]));
+        }
+        let largest2 = second_RevenuePerDaynumberArray[0]
+        for (let i = 0; i < second_RevenuePerDaynumberArray.length; i++) {
+          if(largest2 < second_RevenuePerDaynumberArray[i]){
+            largest2 = second_RevenuePerDaynumberArray[i]
+          }
+        }
+        var graphMax = Math.max(largest1,largest2 );
+
+        var areaData = {
+          labels: [ Dayarray[0],"",Dayarray[1],"",Dayarray[2],"",Dayarray[3],"", Dayarray[4],"", Dayarray[5],"",Dayarray[6]],
+          datasets: [
+            {
+              data: [ second_RevenuePerDay[0], second_RevenuePerDay[0] , second_RevenuePerDay[1], second_RevenuePerDay[1], second_RevenuePerDay[2], second_RevenuePerDay[2], second_RevenuePerDay[3], second_RevenuePerDay[3], second_RevenuePerDay[4], second_RevenuePerDay[4], second_RevenuePerDay[5], second_RevenuePerDay[5], second_RevenuePerDay[6] , second_RevenuePerDay[6]],
+              borderColor: [
+                '#4747A1'
+              ],
+              borderWidth: 2,
+              fill: false,
+              label: "Orders"
+            },
+            {
+              data: [ RevenuePerDay[0], RevenuePerDay[0] , RevenuePerDay[1], RevenuePerDay[1], RevenuePerDay[2], RevenuePerDay[2], RevenuePerDay[3], RevenuePerDay[3], RevenuePerDay[4], RevenuePerDay[4], RevenuePerDay[5], RevenuePerDay[5], RevenuePerDay[6] , RevenuePerDay[6]],
+              borderColor: [
+                '#F09397'
+              ],
+              borderWidth: 2,
+              fill: false,
+              label: "Orders"
+            }
+          ]
+        };
+        var areaOptions = {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            filler: {
+              propagate: false
+            }
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              ticks: {
+                display: true,
+                padding: 10,
+                fontColor:"#6C7383"
+              },
+              gridLines: {
+                display: false,
+                drawBorder: false,
+                color: 'transparent',
+                zeroLineColor: '#eeeeee'
+              }
+            }],
+            yAxes: [{
+              display: true,
+              ticks: {
+                display: true,
+                autoSkip: false,
+                maxRotation: 0,
+                stepSize: 200,
+                min: 0,
+                max: graphMax,
+                padding: 18,
+                fontColor:"#6C7383"
+              },
+              gridLines: {
+                display: true,
+                color:"#f2f2f2",
+                drawBorder: false
+              }
+            }]
+          },
+          legend: {
+            display: false
+          },
+          tooltips: {
+            enabled: true
+          },
+          elements: {
+            line: {
+              tension: .35
+            },
+            point: {
+              radius: 0
+            }
+          }
+        }
+        var revenueChartCanvas = $("#order-chart").get(0).getContext("2d");
+        var revenueChart = new Chart(revenueChartCanvas, {
+          type: 'line',
+          data: areaData,
+          options: areaOptions
+        });
+      }
+      if ($("#order-chart-dark").length) {
+        var areaData = {
+          labels: ["10","","","20","","","30","","","40","","", "50","","", "60","","","70"],
+          datasets: [
+            {
+              data: [200, 480, 700, 600, 620, 350, 380, 350, 850, "600", "650", "350", "590", "350", "620", "500", "990", "780", "650"],
+              borderColor: [
+                '#4747A1'
+              ],
+              borderWidth: 2,
+              fill: false,
+              label: "Orders"
+            },
+            {
+              data: [400, 450, 410, 500, 480, 600, 450, 550, 460, "560", "450", "700", "450", "640", "550", "650", "400", "850", "800"],
+              borderColor: [
+                '#F09397'
+              ],
+              borderWidth: 2,
+              fill: false,
+              label: "Downloads"
+            }
+          ]
+        };
+        var areaOptions = {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            filler: {
+              propagate: false
+            }
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              ticks: {
+                display: true,
+                padding: 10,
+                fontColor:"#fff"
+              },
+              gridLines: {
+                display: false,
+                drawBorder: false,
+                color: 'transparent',
+                zeroLineColor: '#575757'
+              }
+            }],
+            yAxes: [{
+              display: true,
+              ticks: {
+                display: true,
+                autoSkip: false,
+                maxRotation: 0,
+                stepSize: 200,
+                min: 200,
+                max: 1200,
+                padding: 18,
+                fontColor:"#fff"
+              },
+              gridLines: {
+                display: true,
+                color:"#575757",
+                drawBorder: false
+              }
+            }]
+          },
+          legend: {
+            display: false
+          },
+          tooltips: {
+            enabled: true
+          },
+          elements: {
+            line: {
+              tension: .35
+            },
+            point: {
+              radius: 0
+            }
+          }
+        }
+        var revenueChartCanvas = $("#order-chart-dark").get(0).getContext("2d");
+        var revenueChart = new Chart(revenueChartCanvas, {
+          type: 'line',
+          data: areaData,
+          options: areaOptions
+        });
+      }
+      if ($("#sales-chart").length) {
+        var SalesChartCanvas = $("#sales-chart").get(0).getContext("2d");
+        var SalesChart = new Chart(SalesChartCanvas, {
+          type: 'bar',
+          data: {
+            labels: '<%= months %>'.split(','),
+            datasets: [{
+                label: 'Razorpay',
+                data: '<%= payment_razorpay_revenue_final %>'.split(','),
+                backgroundColor: '#98BDFF'
+              },
+              {
+                label: 'Paypal',
+                data: '<%= payment_paypal_revenue_final %>'.split(','),
+                backgroundColor: '#4B49AC'
+              },
+              {
+                label: 'COD',
+                data: '<%= payment_cod_revenue_final %>'.split(','),
+                backgroundColor: '#FFC100'
+              }
+            ]
+          },
+          options: {
+            cornerRadius: 5,
+            responsive: true,
+            maintainAspectRatio: true,
+            layout: {
+              padding: {
+                left: 0,
+                right: 0,
+                top: 20,
+                bottom: 0
+              }
+            },
+            scales: {
+              yAxes: [{
+                display: true,
+                gridLines: {
+                  display: true,
+                  drawBorder: false,
+                  color: "#F2F2F2"
+                },
+                ticks: {
+                  display: true,
+                  min: 0,
+                  max: '<%= graphMaxPaymentMethod %>',
+                  stepSize: 200,
+                  callback: function(value, index, values) {
+                    return  value + '₹' ;
+                  },
+                  autoSkip: true,
+                  maxTicksLimit: 10,
+                  fontColor:"#6C7383"
+                }
+              }],
+              xAxes: [{
+                stacked: false,
+                ticks: {
+                  beginAtZero: true,
+                  fontColor: "#6C7383"
+                },
+                gridLines: {
+                  color: "rgba(0, 0, 0, 0)",
+                  display: false
+                },
+                barPercentage: 1
+              }]
+            },
+            legend: {
+              display: false
+            },
+            elements: {
+              point: {
+                radius: 0
+              }
+            }
+          },
+        });
+        document.getElementById('sales-legend').innerHTML = SalesChart.generateLegend();
+      }
+      if ($("#sales-chart-dark").length) {
+        var SalesChartCanvas = $("#sales-chart-dark").get(0).getContext("2d");
+        var SalesChart = new Chart(SalesChartCanvas, {
+          type: 'bar',
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May"],
+            datasets: [{
+                label: 'Offline Sales',
+                data: [480, 230, 470, 210, 330],
+                backgroundColor: '#98BDFF'
+              },
+              {
+                label: 'Online Sales',
+                data: [400, 340, 550, 480, 170],
+                backgroundColor: '#4B49AC'
+              }
+            ]
+          },
+          options: {
+            cornerRadius: 5,
+            responsive: true,
+            maintainAspectRatio: true,
+            layout: {
+              padding: {
+                left: 0,
+                right: 0,
+                top: 20,
+                bottom: 0
+              }
+            },
+            scales: {
+              yAxes: [{
+                display: true,
+                gridLines: {
+                  display: true,
+                  drawBorder: false,
+                  color: "#575757"
+                },
+                ticks: {
+                  display: true,
+                  min: 0,
+                  max: 500,
+                  callback: function(value, index, values) {
+                    return  value + '$' ;
+                  },
+                  autoSkip: true,
+                  maxTicksLimit: 10,
+                  fontColor:"#F0F0F0"
+                }
+              }],
+              xAxes: [{
+                stacked: false,
+                ticks: {
+                  beginAtZero: true,
+                  fontColor: "#F0F0F0"
+                },
+                gridLines: {
+                  color: "#575757",
+                  display: false
+                },
+                barPercentage: 1
+              }]
+            },
+            legend: {
+              display: false
+            },
+            elements: {
+              point: {
+                radius: 0
+              }
+            }
+          },
+        });
+        document.getElementById('sales-legend').innerHTML = SalesChart.generateLegend();
+      }
+      let Categorylength = document.getElementById('CategoryLength').value
+      for(let i = 0; i < Categorylength; i++) {
+        let prodcatarray = JSON.parse('<%= catProdarray %>')
+        let labelLength = JSON.parse('<%= labelLength %>')
+        let catProdLabel = '<%= catProdLabel %>'.split(',')
+        // console.log('<%= catProdLabel %>');
+        // console.log(labelLength[i]);
+        // console.log(labelLength[i]);
+        let k = labelLength[i -  1]
+        if ($("#north-america-chart-" + i).length) {
+          var areaData = {
+            labels: catProdLabel.splice(k , labelLength[i]),
+            datasets: [{
+                data: prodcatarray[i],
+                backgroundColor: [
+                  "#4B49AC","#FFC100", "#248AFD", "#FFB900" , "#12FE07" , "#0747FE" , "#FE07FE" , "#FE073F" , "#ADA71D" , "#1DAD4D","#FFC100", "#248AFD", "#FFB900" ,
+                ],
+                borderColor: "rgba(0,0,0,0)"
+              }
+            ]
+          };
+          var areaOptions = {
+            responsive: true,
+            maintainAspectRatio: true,
+            segmentShowStroke: false,
+            cutoutPercentage: 78,
+            elements: {
+              arc: {
+                  borderWidth: 4
+              }
+            },      
+            legend: {
+              display: false
+            },
+            tooltips: {
+              enabled: true
+            },
+            legendCallback: function(chart) { 
+              var text = [];
+              // text.push('<div class="report-chart">');
+              //   text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[0] + '"></div><p class="mb-0">Offline sales</p></div>');
+              //   text.push('<p class="mb-0">88333</p>');
+              //   text.push('</div>');
+              //   text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[1] + '"></div><p class="mb-0">Online sales</p></div>');
+              //   text.push('<p class="mb-0">66093</p>');
+              //   text.push('</div>');
+              //   text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[2] + '"></div><p class="mb-0">Returns</p></div>');
+              //   text.push('<p class="mb-0">39836</p>');
+              //   text.push('</div>');
+              // text.push('</div>');
+              return text.join("");
+            },
+          }
+          var northAmericaChartPlugins = {
+            beforeDraw: function(chart) {
+              var width = chart.chart.width,
+                  height = chart.chart.height,
+                  ctx = chart.chart.ctx;
+          
+              ctx.restore();
+              var fontSize = 3.125;
+              ctx.font = "500 " + fontSize + "em sans-serif";
+              ctx.textBaseline = "middle";
+              ctx.fillStyle = "#13381B";
+          
+              var text = "100",
+                  textX = Math.round((width - ctx.measureText(text).width) / 2),
+                  textY = height / 2;
+          
+              ctx.fillText(text, textX, textY);
+              ctx.save();
+            }
+          }
+          var northAmericaChartCanvas = $("#north-america-chart-"+i).get(0).getContext("2d");
+          var northAmericaChart = new Chart(northAmericaChartCanvas, {
+            type: 'doughnut',
+            data: areaData,
+            options: areaOptions,
+            plugins: northAmericaChartPlugins
+          });
+          document.getElementById('north-america-legend-'+i).innerHTML = northAmericaChart.generateLegend();
+        }
+      }
+      if ($("#north-america-chart-dark").length) {
+        var areaData = {
+          labels: ["Jan", "Feb", "Mar"],
+          datasets: [{
+              data: [100, 50, 50],
+              backgroundColor: [
+                "#4B49AC","#FFC100", "#248AFD",
+              ],
+              borderColor: "rgba(0,0,0,0)"
+            }
+          ]
+        };
+        var areaOptions = {
+          responsive: true,
+          maintainAspectRatio: true,
+          segmentShowStroke: false,
+          cutoutPercentage: 78,
+          elements: {
+            arc: {
+                borderWidth: 4
+            }
+          },      
+          legend: {
+            display: false
+          },
+          tooltips: {
+            enabled: true
+          },
+          legendCallback: function(chart) { 
+            var text = [];
+            text.push('<div class="report-chart">');
+              text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[0] + '"></div><p class="mb-0">Offline sales</p></div>');
+              text.push('<p class="mb-0">88333</p>');
+              text.push('</div>');
+              text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[1] + '"></div><p class="mb-0">Online sales</p></div>');
+              text.push('<p class="mb-0">66093</p>');
+              text.push('</div>');
+              text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[2] + '"></div><p class="mb-0">Returns</p></div>');
+              text.push('<p class="mb-0">39836</p>');
+              text.push('</div>');
+            text.push('</div>');
+            return text.join("");
+          },
+        }
+        var northAmericaChartPlugins = {
+          beforeDraw: function(chart) {
+            var width = chart.chart.width,
+                height = chart.chart.height,
+                ctx = chart.chart.ctx;
+        
+            ctx.restore();
+            var fontSize = 3.125;
+            ctx.font = "500 " + fontSize + "em sans-serif";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#fff";
+        
+            var text = "90",
+                textX = Math.round((width - ctx.measureText(text).width) / 2),
+                textY = height / 2;
+        
+            ctx.fillText(text, textX, textY);
+            ctx.save();
+          }
+        }
+        var northAmericaChartCanvas = $("#north-america-chart-dark").get(0).getContext("2d");
+        var northAmericaChart = new Chart(northAmericaChartCanvas, {
+          type: 'doughnut',
+          data: areaData,
+          options: areaOptions,
+          plugins: northAmericaChartPlugins
+        });
+        document.getElementById('north-america-legend').innerHTML = northAmericaChart.generateLegend();
+      }
+
+      if ($("#south-america-chart").length) {
+        var areaData = {
+          labels: ["Jan", "Feb", "Mar"],
+          datasets: [{
+              data: [60, 70, 70],
+              backgroundColor: [
+                "#4B49AC","#FFC100", "#248AFD",
+              ],
+              borderColor: "rgba(0,0,0,0)"
+            }
+          ]
+        };
+        var areaOptions = {
+          responsive: true,
+          maintainAspectRatio: true,
+          segmentShowStroke: false,
+          cutoutPercentage: 78,
+          elements: {
+            arc: {
+                borderWidth: 4
+            }
+          },      
+          legend: {
+            display: false
+          },
+          tooltips: {
+            enabled: true
+          },
+          legendCallback: function(chart) { 
+            var text = [];
+            text.push('<div class="report-chart">');
+              text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[0] + '"></div><p class="mb-0">Offline sales</p></div>');
+              text.push('<p class="mb-0">495343</p>');
+              text.push('</div>');
+              text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[1] + '"></div><p class="mb-0">Online sales</p></div>');
+              text.push('<p class="mb-0">630983</p>');
+              text.push('</div>');
+              text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[2] + '"></div><p class="mb-0">Returns</p></div>');
+              text.push('<p class="mb-0">290831</p>');
+              text.push('</div>');
+            text.push('</div>');
+            return text.join("");
+          },
+        }
+        var southAmericaChartPlugins = {
+          beforeDraw: function(chart) {
+            var width = chart.chart.width,
+                height = chart.chart.height,
+                ctx = chart.chart.ctx;
+        
+            ctx.restore();
+            var fontSize = 3.125;
+            ctx.font = "600 " + fontSize + "em sans-serif";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#000";
+        
+            var text = "76",
+                textX = Math.round((width - ctx.measureText(text).width) / 2),
+                textY = height / 2;
+        
+            ctx.fillText(text, textX, textY);
+            ctx.save();
+          }
+        }
+        var southAmericaChartCanvas = $("#south-america-chart").get(0).getContext("2d");
+        var southAmericaChart = new Chart(southAmericaChartCanvas, {
+          type: 'doughnut',
+          data: areaData,
+          options: areaOptions,
+          plugins: southAmericaChartPlugins
+        });
+        document.getElementById('south-america-legend').innerHTML = southAmericaChart.generateLegend();
+      }
+      if ($("#south-america-chart-dark").length) {
+        var areaData = {
+          labels: ["Jan", "Feb", "Mar"],
+          datasets: [{
+              data: [60, 70, 70],
+              backgroundColor: [
+                "#4B49AC","#FFC100", "#248AFD",
+              ],
+              borderColor: "rgba(0,0,0,0)"
+            }
+          ]
+        };
+        var areaOptions = {
+          responsive: true,
+          maintainAspectRatio: true,
+          segmentShowStroke: false,
+          cutoutPercentage: 78,
+          elements: {
+            arc: {
+                borderWidth: 4
+            }
+          },      
+          legend: {
+            display: false
+          },
+          tooltips: {
+            enabled: true
+          },
+          legendCallback: function(chart) { 
+            var text = [];
+            text.push('<div class="report-chart">');
+              text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[0] + '"></div><p class="mb-0">Offline sales</p></div>');
+              text.push('<p class="mb-0">495343</p>');
+              text.push('</div>');
+              text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[1] + '"></div><p class="mb-0">Online sales</p></div>');
+              text.push('<p class="mb-0">630983</p>');
+              text.push('</div>');
+              text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[2] + '"></div><p class="mb-0">Returns</p></div>');
+              text.push('<p class="mb-0">290831</p>');
+              text.push('</div>');
+            text.push('</div>');
+            return text.join("");
+          },
+        }
+        var southAmericaChartPlugins = {
+          beforeDraw: function(chart) {
+            var width = chart.chart.width,
+                height = chart.chart.height,
+                ctx = chart.chart.ctx;
+        
+            ctx.restore();
+            var fontSize = 3.125;
+            ctx.font = "600 " + fontSize + "em sans-serif";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#fff";
+        
+            var text = "76",
+                textX = Math.round((width - ctx.measureText(text).width) / 2),
+                textY = height / 2;
+        
+            ctx.fillText(text, textX, textY);
+            ctx.save();
+          }
+        }
+        var southAmericaChartCanvas = $("#south-america-chart-dark").get(0).getContext("2d");
+        var southAmericaChart = new Chart(southAmericaChartCanvas, {
+          type: 'doughnut',
+          data: areaData,
+          options: areaOptions,
+          plugins: southAmericaChartPlugins
+        });
+        document.getElementById('south-america-legend').innerHTML = southAmericaChart.generateLegend();
+      }
+
+      function format ( d ) {
+        // `d` is the original data object for the row
+        return '<table cellpadding="5" cellspacing="0" border="0" style="width:100%;">'+
+            '<tr class="expanded-row">'+
+                '<td colspan="8" class="row-bg"><div><div class="d-flex justify-content-between"><div class="cell-hilighted"><div class="d-flex mb-2"><div class="mr-2 min-width-cell"><p>Policy start date</p><h6>25/04/2020</h6></div><div class="min-width-cell"><p>Policy end date</p><h6>24/04/2021</h6></div></div><div class="d-flex"><div class="mr-2 min-width-cell"><p>Sum insured</p><h5>$26,000</h5></div><div class="min-width-cell"><p>Premium</p><h5>$1200</h5></div></div></div><div class="expanded-table-normal-cell"><div class="mr-2 mb-4"><p>Quote no.</p><h6>Incs234</h6></div><div class="mr-2"><p>Vehicle Reg. No.</p><h6>KL-65-A-7004</h6></div></div><div class="expanded-table-normal-cell"><div class="mr-2 mb-4"><p>Policy number</p><h6>Incsq123456</h6></div><div class="mr-2"><p>Policy number</p><h6>Incsq123456</h6></div></div><div class="expanded-table-normal-cell"><div class="mr-2 mb-3 d-flex"><div class="highlighted-alpha"> A</div><div><p>Agent / Broker</p><h6>Abcd Enterprices</h6></div></div><div class="mr-2 d-flex"> <img src="../../images/faces/face5.jpg" alt="profile"/><div><p>Policy holder Name & ID Number</p><h6>Phillip Harris / 1234567</h6></div></div></div><div class="expanded-table-normal-cell"><div class="mr-2 mb-4"><p>Branch</p><h6>Koramangala, Bangalore</h6></div></div><div class="expanded-table-normal-cell"><div class="mr-2 mb-4"><p>Channel</p><h6>Online</h6></div></div></div></div></td>'
+            '</tr>'+
+        '</table>';
+    }
+    var table = $('#example').DataTable( {
+      "ajax": "js/data.txt",
+      "columns": [
+          { "data": "Quote" },
+          { "data": "Product" },
+          { "data": "Business" },
+          { "data": "Policy" }, 
+          { "data": "Premium" }, 
+          { "data": "Status" }, 
+          { "data": "Updated" }, 
+          {
+            "className":      'details-control',
+            "orderable":      false,
+            "data":           null,
+            "defaultContent": ''
+          }
+      ],
+      "order": [[1, 'asc']],
+      "paging":   false,
+      "ordering": true,
+      "info":     false,
+      "filter": false,
+      columnDefs: [{
+        orderable: false,
+        className: 'select-checkbox',
+        targets: 0
+      }],
+      select: {
+        style: 'os',
+        selector: 'td:first-child'
+      }
+    } );
+  $('#example tbody').on('click', 'td.details-control', function () {
+    var tr = $(this).closest('tr');
+    var row = table.row( tr );
+
+    if ( row.child.isShown() ) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+    }
+    else {
+        // Open this row
+        row.child( format(row.data()) ).show();
+        tr.addClass('shown');
+    }
+  } );
+    
+    });
+  })(jQuery);
+</script>

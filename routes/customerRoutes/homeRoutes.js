@@ -8,4 +8,6 @@ router.get("/home", homeController.homeGet);
 
 router.post("/home", homeController.homePost);
 
+router.post("/homeFilterCategory", homeController.homeFilterCategoryPost);
+
 module.exports = router;

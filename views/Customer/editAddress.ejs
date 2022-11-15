@@ -1,0 +1,144 @@
+<%- include('includes/_header') %>
+
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html -->
+            <%- include('includes/_header_navbar') %>
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper d-block">
+                <!-- partial:partials/_settings-panel.html -->
+
+
+                <!-- partial -->
+                <!-- partial:partials/_sidebar.html -->
+                <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/home">
+                                <i class="icon-home menu-icon"></i>
+                                <span class="menu-title">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/orders">
+                                <i class="icon-notebook menu-icon"></i>
+                                <span class="menu-title">Your Orders</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/cart">
+                                <i class="icon-bag menu-icon"></i>
+                                <span class="menu-title">Cart</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/wishlist">
+                                <i class="icon-heart menu-icon"></i>
+                                <span class="menu-title">Wishlist</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="main-panel" style="width: 100%;">
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin">
+                                <h2 class="font-weight-bold">Edit Address</h2>
+                                <h5 style="margin-bottom: 40px;">Your food will be delivered at your selected location.</h5>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Edit delivery Address</h4>
+                                        <form class="form-sample" id="addressForm" action="/Customer/editAddress"
+                                            method="post">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">Name</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="hidden" class="form-control" name="id" value="<%= Address._id %>" />
+                                                            <input type="text" class="form-control" name="name" value="<%= Address.name %>" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">House Name</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" name="houseName" value="<%= Address.houseName %>" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">Phone Number</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" value="<%= Address.phoneNumber %>"
+                                                                name="phoneNumber" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">Alternative
+                                                            Number</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" value="<%= Address.alternativePhoneNumber %>"
+                                                                name="alternativePhoneNumber" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">City</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" name="city" value="<%= Address.city %>" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">Street</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" name="street" value="<%= Address.street %>"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">Landmark</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" name="landMark" value="<%= Address.landMark %>" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label"></label>
+                                                        <div class="col-sm-9">
+                                                            <button type="submit" class="btn btn-info"
+                                                                style="width: 48%;">Update Address</button>
+                                                            <a href="/Customer/editProfile" class="btn btn-warning  ml-2"
+                                                                style="width: 48%;">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+    </body>
+
+    <%- include('includes/_footer') %>

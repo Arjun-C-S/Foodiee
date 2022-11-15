@@ -1,0 +1,512 @@
+<%- include('includes/_header') %>
+
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html -->
+            <%- include('includes/_header_navbar') %>
+            <!-- partial -->
+                <div class="container-fluid page-body-wrapper d-block">
+                    <!-- partial:partials/_settings-panel.html -->
+
+
+                    <!-- partial -->
+                    <!-- partial:partials/_sidebar.html -->
+                    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Customer/home">
+                                    <i class="icon-home menu-icon"></i>
+                                    <span class="menu-title">Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Customer/orders">
+                                    <i class="icon-notebook menu-icon"></i>
+                                    <span class="menu-title">Your Orders</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Customer/cart">
+                                    <i class="icon-bag menu-icon"></i>
+                                    <span class="menu-title">Cart</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Customer/wishlist">
+                                  <i class="icon-heart menu-icon"></i>
+                                  <span class="menu-title">Wishlist</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <% if(cartData.length != 0) { %>
+                        <div class="main-panel" style="width: 100%;">
+                            <div class="content-wrapper">
+                                <div class="col-12 d-flex flex-wrap">
+                                    <div class="col-12 col-md-8 grid-margin" style="padding-left: 0px;padding-right: 0px;">
+                                        <% if(cartData[0].cartCustomer.Address.length > 0) { %>
+                                            <div class="card cart-address-table mb-2">
+                                                <div class="card-body p-0">
+                                                    <% for(let i = 0; i < cartData[0].cartCustomer.Address.length; i++ ) { 
+                                                        if( cartData[0].cartCustomer.Address[i].isActive === true) { %>
+                                                            <div class="col-12 d-flex flex-wrap">
+                                                                <div class="col-8 p-0">
+                                                                    <div class="col-12 pb-0 pt-3 cart-address-housename">
+                                                                        Deliver to : <%= cartData[0].cartCustomer.Address[i].name %> , <%= cartData[0].cartCustomer.Address[i].houseName %>
+                                                                    </div>
+                                                                    <div class="col-12 pt-0 pb-3 cart-address-sub">
+                                                                        <%= cartData[0].cartCustomer.Address[i].phoneNumber %> , <%= cartData[0].cartCustomer.Address[i].alternativePhoneNumber %> , <%= cartData[0].cartCustomer.Address[i].city %> , <%= cartData[0].cartCustomer.Address[i].street %> , <%= cartData[0].cartCustomer.Address[i].landMark %>
+                                                                    </div>   
+                                                                </div>  
+                                                                <div class="col-4 align-self-center text-right">
+                                                                    <a href="/Customer/address"><button class="btn btn-dark p-0" style="width: 100px; height: 30px;"><span>Change</span></button></a>
+                                                                </div>
+                                                            </div>                                                   
+                                                    <%  }   } %>
+                                                </div>
+                                            </div>
+                                        <% } %>
+                                        <div id="cart">
+                                            <div class="card" style="border: 4px solid #57b657;border-radius: 0;">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">Your Cart</h4>
+                                                    <div class="row">
+                                                        <div id="cartTableDiv" class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                            <table id="cartTable" class="table table-striped">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th></th>
+                                                                        <th class="sortStyle">Product Image</i></th>
+                                                                        <th class="sortStyle">Name<i class="ti-angle-down"></i></th>
+                                                                        <th class="sortStyle">Price<i class="ti-angle-down"></i></th>
+                                                                        <th class="sortStyle">Quantity<i class="ti-angle-down"></i></th>
+                                                                        <th class="sortStyle">Total<i class="ti-angle-down"></i></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <% let stock_notAvailable = false;  for(var i=0; i < cartData.length; i++) { 
+                                                                         if ( cartData[i].cartProduct.product_quantity == 0 ) { stock_notAvailable = true } }
+                                                                            if( stock_notAvailable ) {  %>
+                                                                                <h6 class="pl-3 pt-2 invalid-coupon" id="stock-notAvailable-warning" style="display: block;">Item not in stock Please remove to continue</h6>
+                                                                            <% } %>
+                                                                    <% let stock_notEnough = false;  for(var i=0; i < cartData.length; i++) { 
+                                                                        if ( cartData[i].cartProduct.product_quantity < cartData[i].Products.Product_Quantity && cartData[i].cartProduct.product_quantity != 0 ) { stock_notEnough = true } }
+                                                                            if( stock_notEnough ) {  %>
+                                                                                <h6 class="pl-3 pt-2 invalid-coupon" id="stock-zero-warning" style="display: block;color: orange;">Selected Quantity not in stock please reduce quantity to continue.</h6>
+                                                                            <% } %>
+                                                                    <% for(var i=0; i < cartData.length; i++) { %>
+                                                                        <% if ( cartData[i].cartProduct.product_quantity > 0 && cartData[i].cartProduct.product_quantity >= cartData[i].Products.Product_Quantity  ) { %>
+                                                                            <tr>
+                                                                                <td id="removeFromCart" style="text-align: center;"
+                                                                                    data-id="<%= cartData[i].Products.Product_id %>"><i
+                                                                                        class="icon-close"></i>
+                                                                                </td>
+                                                                                <td style="width: 20%;"><img
+                                                                                        src="<%= cartData[i].cartProduct.product_image[0] %>"
+                                                                                        alt="<%= cartData[i].cartProduct.product_name %>"
+                                                                                        alt="" srcset="" class="cart-table-img"></td>
+                                                                                <td>
+                                                                                    <%= cartData[i].cartProduct.product_name %>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <% let minPrice = Math.min(cartData[i].cartProduct.product_price , cartData[i].cartProduct.categoryOfferPrice , cartData[i].cartProduct.productOfferPrice) %>
+                                                                                    <%= minPrice %>
+                                                                                </td>
+                                                                                <td style="width: 20%;">
+                                                                                    <button class="btn-cart-common cart-quantity-decrement"
+                                                                                        id="cart-quantity-decrement"
+                                                                                        data-id="<%= cartData[i].Products.Product_id %>"
+                                                                                        data-price="<%= minPrice %>">-</button>
+                                                                                    <input class="cart-quantity" id="cart-quantity"
+                                                                                        type="text" value="<%= cartData[i].Products.Product_Quantity %>"
+                                                                                        disabled>
+                                                                                    <button class="btn-cart-common cart-quantity-increment"
+                                                                                        id="cart-quantity-increment"
+                                                                                        data-id="<%= cartData[i].Products.Product_id %>"
+                                                                                        data-total_quantity="<%= cartData[i].cartProduct.product_quantity %>"
+                                                                                        data-price="<%= minPrice %>">+</button>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%= cartData[i].Products.Total_Price %>
+                                                                                </td>
+                                                                            </tr>
+                                                                        <% } else if (cartData[i].cartProduct.product_quantity < cartData[i].Products.Product_Quantity && cartData[i].cartProduct.product_quantity != 0) { %>
+                                                                            <tr style="border: 2px solid orange; background-color: #ffc14eb5; " id="stock-<%= cartData[i].Products.Product_id %>">
+                                                                                <td id="removeFromCart" style="text-align: center;"
+                                                                                    data-id="<%= cartData[i].Products.Product_id %>"><i
+                                                                                        class="icon-close"></i>
+                                                                                </td>
+                                                                                <td style="width: 20%;"><img
+                                                                                        src="<%= cartData[i].cartProduct.product_image[0] %>"
+                                                                                        alt="<%= cartData[i].cartProduct.product_name %>"
+                                                                                        alt="" srcset="" class="cart-table-img"></td>
+                                                                                <td>
+                                                                                    <%= cartData[i].cartProduct.product_name %>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <% let minPrice = Math.min(cartData[i].cartProduct.product_price , cartData[i].cartProduct.categoryOfferPrice , cartData[i].cartProduct.productOfferPrice) %>
+                                                                                    <%= minPrice %>
+                                                                                </td>
+                                                                                <td style="width: 20%;">
+                                                                                    <button class="btn-cart-common cart-quantity-decrement"
+                                                                                        id="cart-quantity-decrement-stock"
+                                                                                        data-id="<%= cartData[i].Products.Product_id %>"
+                                                                                        data-total_quantity="<%= cartData[i].cartProduct.product_quantity %>"
+                                                                                        data-price="<%= minPrice %>">-</button>
+                                                                                    <input class="cart-quantity" id="cart-quantity-stock"
+                                                                                        type="text" value="<%= cartData[i].Products.Product_Quantity %>"
+                                                                                        disabled>
+                                                                                    <button class="btn-cart-common cart-quantity-increment"
+                                                                                        id="cart-quantity-increment"
+                                                                                        data-id="<%= cartData[i].Products.Product_id %>"
+                                                                                        data-total_quantity="<%= cartData[i].cartProduct.product_quantity %>"
+                                                                                        data-price="<%= minPrice %>">+</button>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%= cartData[i].Products.Total_Price %>
+                                                                                </td>
+                                                                            </tr>
+                                                                        <% } else { %>
+                                                                            <tr style="border: 2px solid red; background-color: #ff001842; ">
+                                                                                <td id="removeFromCart" style="text-align: center;"
+                                                                                    data-id="<%= cartData[i].Products.Product_id %>"><i
+                                                                                        class="icon-close"></i>
+                                                                                </td>
+                                                                                <td style="width: 20%;"><img
+                                                                                        src="<%= cartData[i].cartProduct.product_image[0] %>"
+                                                                                        alt="<%= cartData[i].cartProduct.product_name %>"
+                                                                                        alt="" srcset="" class="cart-table-img"></td>
+                                                                                <td>
+                                                                                    <%= cartData[i].cartProduct.product_name %>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <% let minPrice = Math.min(cartData[i].cartProduct.product_price , cartData[i].cartProduct.categoryOfferPrice , cartData[i].cartProduct.productOfferPrice) %>
+                                                                                    <%= minPrice %>
+                                                                                </td>
+                                                                                <td style="width: 20%;">
+                                                                                    <button class="btn-cart-common cart-quantity-decrement">-</button>
+                                                                                    <input class="cart-quantity" id="cart-quantity-stock"
+                                                                                        type="text" value="<%= cartData[i].Products.Product_Quantity %>"
+                                                                                        disabled>
+                                                                                    <button class="btn-cart-common cart-quantity-increment">+</button>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%= cartData[i].Products.Total_Price %>
+                                                                                </td>
+                                                                            </tr>
+                                                                        <% } %>
+                                                                    <% } %>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="order-summary" style="display: contents;">
+                                        <div class="col-12 col-md-4 pr-0">
+                                            <div class="card cart-order-table">
+                                                <h4 class="card-title pt-3 pb-3 mb-0 cart-order-summary-heading">Order Summary</h4>
+                                                <div class="card-body p-0">
+                                                    <div id="cartTableDiv" class="table-sorter-wrapper col-lg-12 table-responsive p-0">
+                                                        <table id="cartTable" class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="sortStyle">Name</th>
+                                                                    <th class="sortStyle">Quantity</th>
+                                                                    <th class="sortStyle">Total Price</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% for(var i=0; i < cartData.length; i++) { %>
+                                                                    <% if ( cartData[i].cartProduct.product_quantity > 0 && cartData[i].Products.Product_Quantity <= cartData[i].cartProduct.product_quantity ) { %>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <%= cartData[i].cartProduct.product_name %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span id="Quantity-<%= cartData[i].Products.Product_id %>"><%= cartData[i].Products.Product_Quantity %></span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span id="Price-<%= cartData[i].Products.Product_id %>"><%= cartData[i].Products.Total_Price %></span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    <% } else if (cartData[i].cartProduct.product_quantity < cartData[i].Products.Product_Quantity && cartData[i].cartProduct.product_quantity != 0) { %>
+                                                                        <tr style="border: 2px solid orange; background-color: #ffc14eb5;">
+                                                                            <td>
+                                                                                <%= cartData[i].cartProduct.product_name %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span id="Quantity-<%= cartData[i].Products.Product_id %>"><%= cartData[i].Products.Product_Quantity %></span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span id="Price-<%= cartData[i].Products.Product_id %>"><%= cartData[i].Products.Total_Price %></span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    <% } else { %>
+                                                                        <tr style="border: 2px solid red;background-color: #ff001842 ">
+                                                                            <td>
+                                                                                <%= cartData[i].cartProduct.product_name %>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span id="Quantity-<%= cartData[i].Products.Product_id %>"><%= cartData[i].Products.Product_Quantity %></span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span id="Price-<%= cartData[i].Products.Product_id %>"><%= cartData[i].Products.Total_Price %></span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    <% } %>
+                                                                <% } %>
+                                                                    <tr>
+                                                                        
+                                                                        <td>Grand Total : </td>
+                                                                        <td></td>
+                                                                        <td>
+                                                                            <div id="tot_amt">
+                                                                                <% if(cartData[0].isCoupon == 0) { %>
+                                                                                    ₹<span id="grand-total" style="font-weight: 700;"><%= cartData[0].Grand_Total %></span>
+                                                                                <% } else { %>
+                                                                                    <span id="grand-total-old" class="grand-total-old" style="font-weight: 700;padding-right: 5px;">₹<%= cartData[0].Grand_Total * 100 / couponData[0].coupon[0].Offer_Percentage %></span>₹<span id="grand-total" style="font-weight: 700;font-size: 20px;;"><%= cartData[0].Grand_Total %></span>
+                                                                                <% } %>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <% let allItemInStock = true; for(var i=0; i < cartData.length; i++) { 
+                                                     if ( cartData[i].cartProduct.product_quantity == 0 ||  cartData[i].cartProduct.product_quantity < cartData[i].Products.Product_Quantity ) { allItemInStock = false } }
+                                                    if(allItemInStock) { %>
+                                                        <a href="/Customer/invoiceOrder" class="btn btn-success" style="border-radius: 0px; width: 100%;">CheckOut</a>
+                                                    <% } else { %>
+                                                        <a class="btn btn-success" style="border-radius: 0px; width: 100%;cursor: no-drop;">CheckOut</a>
+                                                    <% } %>
+                                            </div>
+                                            <div id="coupon">
+                                                <div class="col-12 p-0 pt-4 d-flex" >
+                                                    <% if( cartData[0].isCoupon == 0 ) { %>
+                                                        <div class="col-9 p-0">
+                                                            <div class="form-group">
+                                                            <input type="text" name="couponCode" id="couponCode" class="form-control form-control-lg" placeholder="Enter Coupon code" style="border-radius: 0;text-transform: uppercase;" onkeyup="checkCouponCode()">
+                                                            <h6 class="pl-3 pt-2 invalid-coupon" id="invalid-coupon">Please Enter a valid Coupon code</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 p-0">
+                                                            <button id="ApplyCoupon" class="btn-success form-control form-control-lg" style="border-radius: 0;">Apply</button>
+                                                        </div>
+                                                    <% } else { %>
+                                                        <div class="col-9 p-0">
+                                                            <div class="form-group">
+                                                            <input type="text" name="couponCode" id="couponCode" class="form-control form-control-lg" style="border-radius: 0;" value="<%= cartData[0].isCoupon %>" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 p-0">
+                                                            <button id="RemoveCoupon" class="btn-danger form-control form-control-lg" style="border-radius: 0;">Remove</button>
+                                                        </div>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- content-wrapper ends -->
+                        </div>
+                    <!-- main-panel ends -->
+                    <% } else { %>
+                        <%- include('includes/_emptyCart') %>
+                    <% } %>
+                </div>
+            <!-- page-body-wrapper ends -->
+            <div id="CouponUsed">
+                <span>Coupon used before!!!</span>
+            </div>
+            <div id="CouponAppliedSuccessToast">
+                <span>Coupon applied Successfully</span>
+            </div>
+            <div id="CouponRemovedSuccessToast">
+                <span>Coupon removed Successfully</span>
+            </div>
+        </div>
+    </body>
+
+    <%- include('includes/_footer') %>
+
+        <script>
+            $(document).on("click", "#cart-quantity-decrement", function () {
+                let id = $(this).data('id');
+                let price = $(this).data('price');
+                let input_box = $(this);
+                console.log(input_box);
+                let quantity = input_box[0].nextSibling.nextSibling.value;
+                // console.log(quantity);
+                if (quantity > 1) {
+                    quantity--;
+                    input_box[0].nextSibling.nextSibling.value = quantity;
+                    document.getElementById('Quantity-'+id).innerText = quantity
+                    input_box[0].parentNode.nextElementSibling.innerText = Number(input_box[0].parentNode.nextElementSibling.innerText) - Number(price);
+                    document.getElementById('grand-total').innerText = Number(document.getElementById('grand-total').innerText) - Number(price)
+                    let new_price = Number(input_box[0].parentNode.nextElementSibling.innerText);
+                    document.getElementById('Price-'+id).innerText = new_price
+                    // console.log(input_box[0].parentNode.nextElementSibling.innerText);
+                    $.ajax({
+                        url: '/Customer/removeFromCart',
+                        method: 'POST',
+                        contentType: "application/json",
+                        data: JSON.stringify({ product_id: id , task: "decrement" , price: Number(new_price) }),
+                        success: function (res) {
+                            console.log(res);
+                        }
+                    })
+                }
+            })
+            $(document).on("click", "#cart-quantity-increment", function () {
+                console.log('increment');
+                let id = $(this).data('id');
+                let price = $(this).data('price');
+                let total_quantity = $(this).data('total_quantity');
+                // console.log(id);nextElementSibling
+                let input_box = $(this);
+                let quantity = input_box[0].previousSibling.previousSibling.value;
+                // console.log(quantity);
+                quantity++;
+                if(quantity > total_quantity) {
+                    showSwal('cart-limit-reached')
+                } else {
+                    input_box[0].parentNode.nextElementSibling.innerText = Number(input_box[0].parentNode.nextElementSibling.innerText) + Number(price)
+                    document.getElementById('grand-total').innerText = Number(document.getElementById('grand-total').innerText) + Number(price)
+                    input_box[0].previousSibling.previousSibling.value = quantity;
+                    document.getElementById('Quantity-'+id).innerText = quantity
+                    let new_price = Number(input_box[0].parentNode.nextElementSibling.innerText)
+                    document.getElementById('Price-'+id).innerText = new_price
+                    $.ajax({
+                        url: '/Customer/addTocart',
+                        method: 'PATCH',
+                        contentType: "application/json",
+                        data: JSON.stringify({ product_id: id , price: Number(new_price)}),
+                        success: function (res) {
+                            console.log('executed');
+                            console.log(res);
+                        }
+                    })
+                }
+            })
+            $(document).on("click", "#removeFromCart", function () {
+                let id = $(this).data('id');
+                $.ajax({
+                    url: '/Customer/removeFromCart',
+                    method: 'POST',
+                    contentType: "application/json",
+                    data: JSON.stringify({ product_id: id }),
+                    success: function (res) {
+                        console.log('executed');
+                        if(res.ProductLength == 0) {
+                            location.reload('/Customer/cart');
+                        } else {
+                            $( "#cart" ).load(window.location.href + " #cart" );
+                            $( "#order-summary" ).load(window.location.href + " #order-summary" );
+                        }
+                    }
+                })
+            })
+
+            $(document).on("click", "#ApplyCoupon", function () {
+                let coupon_code = document.getElementById('couponCode').value;
+                coupon_code = coupon_code.toUpperCase()
+                // console.log(coupon_code);
+                if(coupon_code === '') {
+                    document.getElementById('couponCode').style.border = '2px solid red'
+                    document.getElementById('couponCode').style.borderRight = '0px'
+                    document.getElementById('invalid-coupon').innerHTML = 'Please enter a Coupon Code'
+                    document.getElementById('invalid-coupon').style.display = 'contents'
+                    console.log('empty');
+                } else {
+                    $.ajax({
+                    url: '/Customer/applyCoupon',
+                    method: 'POST',
+                    contentType: "application/json",
+                    data: JSON.stringify({ coupon_code: coupon_code }),
+                    success: function (res) {
+                        if(res.CouponData === 'empty') {
+                            document.getElementById('couponCode').style.border = '2px solid red'
+                            document.getElementById('couponCode').style.borderRight = '0px'
+                            document.getElementById('invalid-coupon').innerHTML = 'Please enter a valid Coupon Code'
+                            document.getElementById('invalid-coupon').style.display = 'contents'
+                        } else if(res.CouponData === 'used') {
+                            CouponUsed()
+                        } else {
+                            $( "#coupon" ).load(window.location.href + " #coupon" );
+                            $( "#tot_amt" ).load(window.location.href + " #tot_amt" );
+                            CouponAppliedSuccessToast()
+                        }
+                        console.log(res);
+                    }
+                })
+                    // console.log('not empty');
+                }
+
+            })
+
+            $(document).on("click", "#RemoveCoupon", function () {
+                let coupon_code = document.getElementById('couponCode').value;
+                coupon_code = coupon_code.toUpperCase()
+                // console.log(coupon_code);
+                    $.ajax({
+                    url: '/Customer/RemoveCoupon',
+                    method: 'POST',
+                    contentType: "application/json",
+                    data: JSON.stringify({ coupon_code: coupon_code }),
+                    success: function (res) {
+                        $( "#coupon" ).load(window.location.href + " #coupon" );
+                        $( "#tot_amt" ).load(window.location.href + " #tot_amt" );
+                        CouponRemovedSuccessToast()
+                        console.log(res);
+                    }
+                })
+                    // console.log('not empty');
+            })
+
+            function checkCouponCode() {
+                document.getElementById('couponCode').style.borderColor = '#CED4DA'
+                document.getElementById('invalid-coupon').style.display = 'none'
+            }
+
+
+
+            $(document).on("click", "#cart-quantity-decrement-stock", function () {
+                let id = $(this).data('id');
+                let price = $(this).data('price');
+                let total_quantity = $(this).data('total_quantity');
+                let input_box = $(this);
+                console.log(input_box);
+                let quantity = input_box[0].nextSibling.nextSibling.value;
+                // console.log(quantity);
+                if (quantity > 1) {
+                    quantity--;
+                    input_box[0].nextSibling.nextSibling.value = quantity;
+                    document.getElementById('Quantity-'+id).innerText = quantity
+                    input_box[0].parentNode.nextElementSibling.innerText = Number(input_box[0].parentNode.nextElementSibling.innerText) - Number(price);
+                    document.getElementById('grand-total').innerText = Number(document.getElementById('grand-total').innerText) - Number(price)
+                    let new_price = Number(input_box[0].parentNode.nextElementSibling.innerText);
+                    document.getElementById('Price-'+id).innerText = new_price
+                    // console.log(input_box[0].parentNode.nextElementSibling.innerText);
+                    $.ajax({
+                        url: '/Customer/removeFromCart',
+                        method: 'POST',
+                        contentType: "application/json",
+                        data: JSON.stringify({ product_id: id , task: "decrement" , price: Number(new_price) }),
+                        success: function (res) {
+                            if(total_quantity >=quantity) {
+                                let stock_box = document.getElementById('stock-'+id)
+                                $( "#cart" ).load(window.location.href + " #cart" );
+                                $( "#order-summary" ).load(window.location.href + " #order-summary" );
+                            }
+                            console.log(res);
+                        }
+                    })
+                }
+            })
+
+        </script>

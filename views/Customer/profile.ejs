@@ -1,0 +1,158 @@
+<%- include('includes/_header') %>
+<link rel="stylesheet" href="/Customer_asset/css/vertical-layout-light/profilePicture.css">
+
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html -->
+            <%- include('includes/_header_navbar') %>
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper d-block">
+                <!-- partial:partials/_settings-panel.html -->
+
+
+                <!-- partial -->
+                <!-- partial:partials/_sidebar.html -->
+                <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                    <ul class="nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/Customer/home">
+                                <i class="icon-home menu-icon"></i>
+                                <span class="menu-title">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/orders">
+                                <i class="icon-notebook menu-icon"></i>
+                                <span class="menu-title">Your Orders</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/cart">
+                                <i class="icon-bag menu-icon"></i>
+                                <span class="menu-title">Cart</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Customer/wishlist">
+                                <i class="icon-heart menu-icon"></i>
+                                <span class="menu-title">Wishlist</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 col-xl-8 mb-4 mb-xl-0 d-flex flex-wrap">
+                                <div class="col-6">
+                                    <h3 class="font-weight-bold">Your Profile</h3>
+                                    <h6 class="font-weight-normal mb-4">Go through your profile and update your data.</h6>
+                                </div>
+                                <div class="col-6">
+                                    <div class="col-12 p-0 d-flex flex-wrap">
+                                        <div class="col-4 p-0">
+                                            <label for="" class="form-control form-control-sm referrel-label" >Referrel Code</label>
+                                        </div>
+                                        <div class="col-7 p-0">
+                                            <div class="form-group">
+                                                <input type="text" id="referral-code" class="form-control form-control-sm  referrel-code" disabled
+                                                    value="<%= CustomerData[0].referralCode %>">
+                                            </div>
+                                        </div>
+                                        <div class="col-1 p-0">
+                                            <label for="" class="form-control form-control-sm referrel-code-copy" onclick="copyReferrelCode()" ><i class="mdi mdi-content-copy"></i></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <form class="forms-sample" id="addProductform" style="display: contents;"
+                                action="/Customer/editProfile" method="get">
+                                <div class="col-md-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="col-12 d-flex justify-content-center mt-5">
+                                                <div class="col-3">
+                                                    <div class="avatar-upload mt-0 mb-0">
+                                                        <div class="avatar-preview">
+                                                            <% if( CustomerData[0].profile_image ) { %>
+                                                                <div id="imagePreview"
+                                                                        style="background-image: url('<%= CustomerData[0].profile_image %>');">
+                                                                </div>
+                                                            <% } else { %>
+                                                                <div id="imagePreview"
+                                                                        style="background-image: url('https://res.cloudinary.com/dzfyfd5bg/image/upload/v1666961365/defaultProfile-img_zshguv.png');">
+                                                                </div>
+                                                            <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-9">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control form-control-sm" disabled
+                                                            value="<%= CustomerData[0].name %>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control form-control-sm" disabled
+                                                            value="<%= CustomerData[0].email %>">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control form-control-sm" disabled
+                                                            value="<%= CustomerData[0].phone %>">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group col-12 mt-4">
+                                                    <h4 class="mb-4">Present Address</h4>
+                                                    <% for( var i=0; i < CustomerData[0].Address.length; i++ ) {
+                                                        if(CustomerData[0].Address[i].isActive===true ) { %>
+                                                        <textarea type="text" class="form-control form-control-sm"
+                                                            disabled style="white-space: pre-line;" rows="4"><%= CustomerData[0].Address[i].houseName %>
+                                                            <%= CustomerData[0].Address[i].phoneNumber %>
+                                                            <%= CustomerData[0].Address[i].city %>
+                                                            <%= CustomerData[0].Address[i].street %>
+                                                    </textarea>
+                                                        <% } }%>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button id="btn-edit-profile" class="btn btn-dark"
+                                            style="border-radius: 0px 0px 14px 14px;">Edit Profile</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="CopyrefferalCodeToast">
+            <span>Referrel code copied to Clipboard</span>
+        </div>
+        <script src="/Customer_asset/js/product.js"></script>
+    </body>
+    <script>
+        function copyReferrelCode() {
+            // Get the text field
+            var copyText = document.getElementById("referral-code");
+
+            // Select the text field
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText.value);
+
+            // Alert the copied text
+            CopyrefferalCodeToast()
+            // alert("Copied the text: " + copyText.value);
+        }
+
+
+        
+    
+    </script>
+    <%- include('includes/_footer') %>

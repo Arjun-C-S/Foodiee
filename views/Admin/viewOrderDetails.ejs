@@ -1,0 +1,211 @@
+<%- include('includes/_header') %>
+
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html -->
+            <%- include('includes/_header_navbar') %>
+            <div class="container-fluid page-body-wrapper">
+                <!-- partial:partials/_settings-panel.html -->
+
+
+                <!-- partial -->
+                <!-- partial:partials/_sidebar.html -->
+                <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin/home">
+                                <i class="icon-grid menu-icon"></i>
+                                <span class="menu-title">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" data-toggle="collapse" href="#orders" aria-expanded="true"
+                                aria-controls="ui-basic">
+                                <i class="icon-book-open menu-icon"></i>
+                                <span class="menu-title">Orders</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse show" id="orders">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="/Admin/pendingOrders">Pending
+                                            Orders</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="/Admin/orderProgress">Order
+                                            Progress</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="/Admin/completedOrders">Completed
+                                            Orders</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                                aria-controls="ui-basic">
+                                <i class="icon-screen-desktop menu-icon"></i>
+                                <span class="menu-title">Products</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="ui-basic">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"> <a class="nav-link" href="/Admin/viewProducts">View
+                                            Products</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="/Admin/addProducts">Add Products</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin/category">
+                                <i class=" icon-direction menu-icon"></i>
+                                <span class="menu-title">Category</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="collapse" href="#offers" aria-expanded="false" aria-controls="offers">
+                              <i class="icon-badge menu-icon"></i>
+                              <span class="menu-title">Offers</span>
+                              <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="offers">
+                              <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="/Admin/productOffers">Product Offers</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/Admin/categoryOffers">Category Offers</a></li>
+                              </ul>
+                            </div>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/Admin/Coupons">
+                              <i class="fa fa-money menu-icon"></i>
+                              <span class="menu-title">Coupons</span>
+                            </a>
+                          </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin/viewCustomer">
+                                <i class="icon-people menu-icon"></i>
+                                <span class="menu-title">Customers</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin/salesReportToday">
+                                <i class=" icon-basket menu-icon"></i>
+                                <span class="menu-title">Sales</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <i class=" icon-notebook menu-icon"></i>
+                                <span class="menu-title">Report</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card px-2">
+                                    <div class="card-body">
+                                        <div class="container-fluid">
+                                            <h3 class="text-right my-5">Invoice&nbsp;&nbsp;#INV-17</h3>
+                                            <hr>
+                                        </div>
+                                        <div class="container-fluid d-flex justify-content-between">
+                                            <div class="col-lg-3 ps-0">
+                                                <p class="mt-5 mb-2">
+                                                <h4>Foodiee</h4>
+                                                </p>
+                                                <p>104,<br>Minare SK,<br>Canada, K1A 0G9.</p>
+                                            </div>
+                                            <div class="col-lg-3 pr-0">
+                                                <p class="mt-5 mb-2 text-right"><b>Invoice to</b></p>
+                                                <p class="text-right">
+                                                    <%= orderData[0].orderCustomer.name %><br>
+                                                        <%= orderData[0].Delivery_Address[0].houseName %>,<%=
+                                                                orderData[0].Delivery_Address[0].city %><br>
+                                                                <%= orderData[0].Delivery_Address[0].phoneNumber %> <br>
+                                                                    <%= orderData[0].Delivery_Address[0].street %>.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid d-flex justify-content-between">
+                                            <div class="col-lg-5 ps-0">
+                                                <h5 class="mb-2 mt-5">Invoice Date : <%= orderData[0].Order_Date %>
+                                                </h5>
+                                                <h5 class="mb-2">Payment method : <%= orderData[0].Payment_Method %>
+                                                </h5>
+                                                <h5 class="mb-2">Payment Status : <%= orderData[0].Payment_Status %>
+                                                </h5>
+                                                <h5 class="mb-2">Order Status : <%= orderData[0].Order_Status %>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid mt-5 d-flex justify-content-center w-100">
+                                            <div class="table-responsive w-100">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr class="bg-dark text-white">
+                                                            <th>#</th>
+                                                            <th>Product</th>
+                                                            <th class="text-right">Quantity</th>
+                                                            <th class="text-right">Unit cost</th>
+                                                            <th class="text-right">Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% for(let i=0; i < orderData[0].Product.length; i++) { %>
+                                                            <tr class="text-right">
+                                                                <td class="text-left">
+                                                                    <%= i + 1 %>
+                                                                </td>
+                                                                <td class="text-left">
+                                                                    <%= orderData[0].Product[i].product_name %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= orderData[0].Product[i].product_quantity %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= orderData[0].Product[i].product_price%>
+                                                                </td>
+                                                                <td>
+                                                                    <%= orderData[0].Product[i].Total_Price %>
+                                                                </td>
+                                                            </tr>
+                                                            <% } %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid mt-5 w-100">
+                                            <h4 class="text-right mb-5">Total : ₹<%= orderData[0].Total_Amount %>
+                                            </h4>
+                                            <hr>
+                                        </div>
+                                        <div class="container-fluid w-100">
+                                            <% if(orderStatus) { %>
+                                                <a href="/Admin/orderDeliverd?order_id=<%= orderData[0]._id %>" class="btn btn-success ml-3">Mark as Deliverd</a>
+                                                <a href="/Admin/orderProgress" class="btn btn-primary ml-3">Back</a>
+                                            <% } else if (OrderCompleted) { %>
+                                                <button type="button" class="btn btn-info btn-icon-text">Print<i class="ti-printer btn-icon-append"></i></button>
+                                                <a href="/Admin/completedOrders" class="btn btn-primary ml-3">Back</a>
+                                            <% } else if (salesreport) { %>
+                                                <button type="button" class="btn btn-info btn-icon-text">Print<i class="ti-printer btn-icon-append"></i></button>
+                                                <a href="/Admin/salesReportToday" class="btn btn-primary ml-3">Back</a>
+                                            <% } else { %>
+                                                <a href="/Admin/AcceptOrder?order_id=<%= orderData[0]._id %>" class="btn btn-success ml-3">Accept</a>
+                                                <a href="/Admin/RejectOrder?order_id=<%= orderData[0]._id %>" class="btn btn-danger ml-3">Reject</a>
+                                                <a href="/Admin/pendingOrders" class="btn btn-primary ml-3">Back</a>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- page-body-wrapper ends -->
+        <!-- container-scroller -->
+
+    </body>
+
+    <%- include('includes/_footer') %>

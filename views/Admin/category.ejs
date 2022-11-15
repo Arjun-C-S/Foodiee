@@ -3,84 +3,7 @@
     <body>
         <div class="container-scroller">
             <!-- partial:partials/_navbar.html -->
-            <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-                <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                    <a class="navbar-brand brand-logo mr-5" href=""><img src="/img/main_logo.png" class="mr-2"
-                            style="height: 40px;" alt="logo" /></a>
-                    <a class="navbar-brand brand-logo-mini" href=""><img src="/img/mini-logo.png"
-                            style="width: auto;height: 45px;" alt="logo" /></a>
-                </div>
-                <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-                    <button class="navbar-toggler navbar-toggler align-self-center" type="button"
-                        data-toggle="minimize">
-                        <span class="icon-menu"></span>
-                    </button>
-                    <ul class="navbar-nav navbar-nav-right">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
-                                data-toggle="dropdown">
-                                <i class="icon-bell mx-0 header-icon-big"></i>
-                                <span class="count"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-                                aria-labelledby="notificationDropdown">
-                                <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-success">
-                                            <i class="ti-info-alt mx-0"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                                        <p class="font-weight-light small-text mb-0 text-muted">
-                                            Just now
-                                        </p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-warning">
-                                            <i class="ti-settings mx-0"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <h6 class="preview-subject font-weight-normal">Settings</h6>
-                                        <p class="font-weight-light small-text mb-0 text-muted">
-                                            Private message
-                                        </p>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-info">
-                                            <i class="ti-user mx-0"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                                        <p class="font-weight-light small-text mb-0 text-muted">
-                                            2 days ago
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <div class="d-flex admin-profile">
-                            <a href="" style="text-decoration: none;"><img class="admin-profile-img"
-                                    src="/img/profile-photo.png" alt="user"></a>
-                        </div>
-                        <div class="d-flex logout-box">
-                            <a href="/Admin/logout" style="text-decoration: none;"><i
-                                    class="ti-power-off text-primary header-icon-big"></i></a>
-                        </div>
-                    </ul>
-                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-                        data-toggle="offcanvas">
-                        <span class="icon-menu"></span>
-                    </button>
-                </div>
-            </nav>
+            <%- include('includes/_header_navbar') %>
             <!-- partial -->
             <div class="container-fluid page-body-wrapper">
                 <!-- partial:partials/_settings-panel.html -->
@@ -97,11 +20,19 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">
-                                <i class="icon-book-open menu-icon"></i>
-                                <span class="menu-title">Orders</span>
+                            <a class="nav-link" data-toggle="collapse" href="#orders" aria-expanded="false" aria-controls="ui-basic">
+                              <i class="icon-book-open menu-icon"></i>
+                              <span class="menu-title">Orders</span>
+                              <i class="menu-arrow"></i>
                             </a>
-                        </li>
+                            <div class="collapse" id="orders">
+                              <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="/Admin/pendingOrders">Pending Orders</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/Admin/orderProgress">Order Progress</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/Admin/completedOrders">Completed Orders</a></li>
+                              </ul>
+                            </div>
+                          </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
                                 aria-controls="ui-basic">
@@ -111,8 +42,8 @@
                             </a>
                             <div class="collapse" id="ui-basic">
                                 <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item"> <a class="nav-link" href="">View Products</a></li>
-                                    <li class="nav-item"> <a class="nav-link" href="">Add Products</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="/Admin/viewProducts">View Products</a></li>
+                                    <li class="nav-item"> <a class="nav-link" href="/Admin/addProducts">Add Products</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -123,13 +54,32 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">
+                            <a class="nav-link" data-toggle="collapse" href="#offers" aria-expanded="false">
+                              <i class="icon-badge menu-icon"></i>
+                              <span class="menu-title">Offers</span>
+                              <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="offers">
+                              <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="/Admin/productOffers">Product Offers</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/Admin/CategoryOffers">Category Offers</a></li>
+                              </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin/Coupons">
+                              <i class="fa fa-money menu-icon"></i>
+                              <span class="menu-title">Coupons</span>
+                            </a>
+                          </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Admin/viewCustomer">
                                 <i class="icon-people menu-icon"></i>
                                 <span class="menu-title">Customers</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">
+                            <a class="nav-link" href="/Admin/salesReportToday">
                                 <i class=" icon-basket menu-icon"></i>
                                 <span class="menu-title">Sales</span>
                             </a>
@@ -255,7 +205,7 @@
                                 <h4 class="card-title">Existing Categories</h4>
                                 <div class="row">
                                   <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    <table id="sortable-table-2" class="table table-striped">
+                                    <table id="category-table" class="table table-striped">
                                       <thead>
                                         <tr>
                                           <th>#</th>
@@ -273,16 +223,14 @@
                                                 <td><%= category[i].Category_description %></td>
                                                 <td>
                                                     <a href="/Admin/Category/?id=<%= category[i]._id %>">
-                                                        <button type="button" class="btn btn-success btn-rounded btn-icon">
-                                                            <i class="ti-file"></i>
+                                                        <button type="button" class="btn btn-success btn-sm">Edit
                                                         </button>
                                                     </a>
                                                 </td>
                                                 <td>
                                                     <a>
                                                         <input type="text" name="category_id" id="category_id" value="<%= category[i]._id %>" hidden>
-                                                        <button class="btn btn-danger btn-rounded btn-icon" onclick="showSwal('warning-message-and-cancel')">
-                                                            <i class="ti-alert"></i>
+                                                        <button class="btn btn-danger btn-sm" onclick="showSwal('warning-message-and-cancel')" >Delete
                                                         </button>
                                                     </a>
                                                 </td>

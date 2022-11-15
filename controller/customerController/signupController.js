@@ -15,24 +15,22 @@ exports.signUpPost = (req, res) => {
     return;
   }
 
-  // new user
-  const user = new Customer({
-    name: req.body.name,
-    email: req.body.email,
-    phone: req.body.phone,
-    password: req.body.password,
-    isBlocked: false,
-  });
-  
-  // save user in the database
-  user
-    .save(user)
-    .then((data) => {
-      //res.send(data)
-      res.redirect("/Customer/Verification?phone=" + req.body.phone + "&email=" + req.body.email);
-    })
-    .catch((err) => {
+  req.session.customer_name = req.body.name;
+  req.session.customer_email = req.body.email;
+  req.session.customer_phone = req.body.phone;
+  req.session.customer_password = req.body.password;
+  req.session.referrel = req.body.referrel;
+
+  Customer.findOneAndUpdate(
+    { email: req.body.email },
+    { verificationPhone: true },
+    { useFindAndModify: false }
+  ).then((data) => {
+    if (!data) {
+      res.redirect("/Customer/Verification");
+    } else {
       req.session.emailExists = true;
-      res.redirect("/customer/signup");
-    });
+      res.redirect("/Customer/signUp");
+    }
+  });
 };
