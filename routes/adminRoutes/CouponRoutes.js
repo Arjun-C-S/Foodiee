@@ -4,7 +4,7 @@ const couponController = require("../../controller/adminController/couponControl
 
 const router = express.Router();
 
-router.get("/coupons", couponController.couponGet);
+router.get("/Coupons", couponController.couponGet);
 
 router.get("/couponEdit", couponController.couponEditGet);
 
