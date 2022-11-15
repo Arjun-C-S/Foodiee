@@ -26,8 +26,8 @@ exports.paypalPost = (req, res) => {
     },
     redirect_urls: {
       return_url:
-        "http://localhost:3000/Customer/success?total_amount=" + total_amount,
-      cancel_url: "http://localhost:3000/Customer/cancel",
+        "https://foodiee.herokuapp.com/Customer/success?total_amount=" + total_amount,
+      cancel_url: "https://foodiee.herokuapp.com/Customer/cancel",
     },
     transactions: [
       {
