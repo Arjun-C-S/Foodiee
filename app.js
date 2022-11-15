@@ -9,7 +9,7 @@ const morgan = require("morgan");
 
 const customerLoginRoutes = require("./routes/customerRoutes/loginRoutes");
 const customerSignUpRoutes = require("./routes/customerRoutes/SignUpRoutes");
-const customerHomeRoutes = require("./routes/customerRoutes/HomeRoutes");
+const customerHomeRoutes = require("./routes/customerRoutes/homeRoutes");
 const customerViewProductRoutes = require("./routes/customerRoutes/ViewProductRoutes");
 const customerVerificationRoutes = require("./routes/customerRoutes/VerificationRoutes");
 const customerCartRoutes = require("./routes/customerRoutes/CartRoutes");
