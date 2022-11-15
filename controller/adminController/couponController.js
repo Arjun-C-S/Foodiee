@@ -69,7 +69,7 @@ exports.couponGet = (req, res) => {
 exports.couponEditGet = (req, res) => {
   if(req.session.admin) {
     Coupon.find({ _id: req.query.coupon_id }).then((couponData) => {
-      res.render("Admin/Coupon", {
+      res.render("Admin/coupon", {
         pageTitle: "Edit Coupons",
         couponData: couponData,
         couponAdded: false,
@@ -139,11 +139,11 @@ exports.couponEditPost = (req, res) => {
     Coupon.findByIdAndUpdate(id, req.body)
       .then((data) => {
         req.session.couponUpdated = true;
-        res.redirect("/Admin/Coupons");
+        res.redirect("/Admin/coupons");
       })
       .catch((err) => {
         req.session.couponExists = true;
-        res.redirect("/Admin/Coupons");
+        res.redirect("/Admin/coupons");
       });
   } else {
     res.redirect('/Admin/')
@@ -157,7 +157,7 @@ exports.deleteCouponGet = (req, res) => {
     Coupon.findByIdAndDelete(id)
       .then((data) => {
         req.session.couponDeleted = true;
-        res.redirect("/Admin/Coupons");
+        res.redirect("/Admin/coupons");
       })
       .catch((err) => {
         console.log(err);
