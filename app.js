@@ -7,6 +7,7 @@ const morgan = require("morgan");
 
 //Customer Routes
 
+const guestHomeRoutes = require('./routes/customerRoutes/guestHomeRoutes');
 const customerLoginRoutes = require("./routes/customerRoutes/loginRoutes");
 const customerSignUpRoutes = require("./routes/customerRoutes/SignUpRoutes");
 const customerHomeRoutes = require("./routes/customerRoutes/homeRoutes");
@@ -90,6 +91,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/Customer", customerSignUpRoutes);
+app.use("/Customer", customerLoginRoutes);
 app.use("/Customer", customerHomeRoutes);
 app.use("/Customer", customerViewProductRoutes);
 app.use("/Customer", customerVerificationRoutes);
@@ -108,7 +110,7 @@ app.use("/Customer", customerCouponRoutes);
 app.use("/Customer", customerWalletRoutes);
 app.use("/Customer", customerWalletPaymentRoutes);
 app.use("/Customer", customerOTPloginRoutes);
-app.use("/", customerLoginRoutes);
+app.use("/", guestHomeRoutes);
 
 app.use("/Admin", adminLoginRoutes);
 app.use("/Admin", adminHomeRoutes);

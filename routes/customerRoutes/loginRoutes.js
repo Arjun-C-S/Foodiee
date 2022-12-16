@@ -4,7 +4,7 @@ const loginController = require("../../controller/customerController/loginContro
 
 const router = express.Router();
 
-router.get("/", loginController.checkUser);
+router.get("/login", loginController.checkUser);
 
 router.get("/logout", (req, res) => {
   req.session.destroy();
