@@ -76,143 +76,155 @@ exports.VerificationPost = (req, res) => {
         user
           .save(user)
           .then((response) => {
-            Customer.find({ referralCode: req.session.referrel })
-              .then((CustomerData) => {
-                Wallet.find({ Customer_id: CustomerData[0]._id })
-                  .then((haveWallet) => {
-                    if (haveWallet.length == 0) {
-                      let transactionData = [];
-                      transactionData.push({
-                        Order_id: "---",
-                        Date: moment().format("MMMM Do YYYY, h:mm:ss a"),
-                        Status: "CREDITED",
-                        Amount: 100,
-                      });
-                      // console.log(productData);
-                      const wallet = new Wallet({
-                        Customer_id: ObjectId(CustomerData[0]._id),
-                        Wallet_Total: 100,
-                        Transactions: transactionData,
-                      });
-                      wallet
-                        .save(wallet)
-                        .then((data) => {
-                          // console.log("wallet created");
-                          Customer.find({
-                            $and: [
-                              {
-                                email: req.session.customer_email,
-                                phone: req.session.customer_phone,
-                              },
-                            ],
+            if (req.session.referrel != "") {
+              Customer.find({ referralCode: req.session.referrel })
+                .then((CustomerData) => {
+                  Wallet.find({ Customer_id: CustomerData[0]._id })
+                    .then((haveWallet) => {
+                      if (haveWallet.length == 0) {
+                        let transactionData = [];
+                        transactionData.push({
+                          Order_id: "---",
+                          Date: moment().format("MMMM Do YYYY, h:mm:ss a"),
+                          Status: "CREDITED",
+                          Amount: 100,
+                        });
+                        // console.log(productData);
+                        const wallet = new Wallet({
+                          Customer_id: ObjectId(CustomerData[0]._id),
+                          Wallet_Total: 100,
+                          Transactions: transactionData,
+                        });
+                        wallet
+                          .save(wallet)
+                          .then((data) => {
+                            // console.log("wallet created");
+                            Customer.find({
+                              $and: [
+                                {
+                                  email: req.session.customer_email,
+                                  phone: req.session.customer_phone,
+                                },
+                              ],
+                            })
+                              .then((CustomerData) => {
+                                let transactionData = [];
+                                transactionData.push({
+                                  Order_id: "---",
+                                  Date: moment().format(
+                                    "MMMM Do YYYY, h:mm:ss a"
+                                  ),
+                                  Status: "CREDITED",
+                                  Amount: 50,
+                                });
+                                const wallet = new Wallet({
+                                  Customer_id: ObjectId(CustomerData[0]._id),
+                                  Wallet_Total: 50,
+                                  Transactions: transactionData,
+                                });
+                                wallet
+                                  .save(wallet)
+                                  .then((data) => {
+                                    req.session.customer_name = false;
+                                    req.session.customer_email = false;
+                                    req.session.customer_phone = false;
+                                    req.session.customer_password = false;
+                                    req.session.referrel = false;
+                                    req.session.accountCreated = true;
+                                    res.redirect("/");
+                                  })
+                                  .catch((err) => {
+                                    console.log(err);
+                                  });
+                              })
+                              .catch((err) => {
+                                console.log(err);
+                              });
                           })
-                            .then((CustomerData) => {
-                              let transactionData = [];
-                              transactionData.push({
+                          .catch((err) => {
+                            console.log(err);
+                          });
+                      } else {
+                        Wallet.findOneAndUpdate(
+                          { Customer_id: CustomerData[0]._id },
+                          {
+                            $inc: { Wallet_Total: 100 },
+                            $push: {
+                              Transactions: {
                                 Order_id: "---",
                                 Date: moment().format(
                                   "MMMM Do YYYY, h:mm:ss a"
                                 ),
                                 Status: "CREDITED",
-                                Amount: 50,
-                              });
-                              const wallet = new Wallet({
-                                Customer_id: ObjectId(CustomerData[0]._id),
-                                Wallet_Total: 50,
-                                Transactions: transactionData,
-                              });
-                              wallet
-                                .save(wallet)
-                                .then((data) => {
-                                  req.session.customer_name = false;
-                                  req.session.customer_email = false;
-                                  req.session.customer_phone = false;
-                                  req.session.customer_password = false;
-                                  req.session.referrel = false;
-                                  req.session.accountCreated = true;
-                                  res.redirect("/");
-                                })
-                                .catch((err) => {
-                                  console.log(err);
-                                });
-                            })
-                            .catch((err) => {
-                              console.log(err);
-                            });
-                        })
-                        .catch((err) => {
-                          console.log(err);
-                        });
-                    } else {
-                      Wallet.findOneAndUpdate(
-                        { Customer_id: CustomerData[0]._id },
-                        {
-                          $inc: { Wallet_Total: 100 },
-                          $push: {
-                            Transactions: {
-                              Order_id: "---",
-                              Date: moment().format("MMMM Do YYYY, h:mm:ss a"),
-                              Status: "CREDITED",
-                              Amount: 100,
+                                Amount: 100,
+                              },
                             },
-                          },
-                        }
-                      )
-                        .then((data) => {
-                          Customer.find({
-                            $and: [
-                              {
-                                email: req.session.customer_email,
-                                phone: req.session.customer_phone,
-                              },
-                            ],
-                          })
-                            .then((CustomerData) => {
-                              let transactionData = [];
-                              transactionData.push({
-                                Order_id: "---",
-                                Date: moment().format(
-                                  "MMMM Do YYYY, h:mm:ss a"
-                                ),
-                                Status: "CREDITED",
-                                Amount: 50,
-                              });
-                              const wallet = new Wallet({
-                                Customer_id: ObjectId(CustomerData[0]._id),
-                                Wallet_Total: 50,
-                                Transactions: transactionData,
-                              });
-                              wallet
-                                .save(wallet)
-                                .then((data) => {
-                                  req.session.customer_name = false;
-                                  req.session.customer_email = false;
-                                  req.session.customer_phone = false;
-                                  req.session.customer_password = false;
-                                  req.session.referrel = false;
-                                  req.session.accountCreated = true;
-                                  res.redirect("/");
-                                })
-                                .catch((err) => {
-                                  console.log(err);
-                                });
+                          }
+                        )
+                          .then((data) => {
+                            Customer.find({
+                              $and: [
+                                {
+                                  email: req.session.customer_email,
+                                  phone: req.session.customer_phone,
+                                },
+                              ],
                             })
-                            .catch((err) => {
-                              console.log(err);
-                            });
-                        })
-                        .catch((err) => {
-                          console.log(err);
-                        });
-                    }
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              })
-              .catch((err) => {
-                console.log(err);
-              });
+                              .then((CustomerData) => {
+                                let transactionData = [];
+                                transactionData.push({
+                                  Order_id: "---",
+                                  Date: moment().format(
+                                    "MMMM Do YYYY, h:mm:ss a"
+                                  ),
+                                  Status: "CREDITED",
+                                  Amount: 50,
+                                });
+                                const wallet = new Wallet({
+                                  Customer_id: ObjectId(CustomerData[0]._id),
+                                  Wallet_Total: 50,
+                                  Transactions: transactionData,
+                                });
+                                wallet
+                                  .save(wallet)
+                                  .then((data) => {
+                                    req.session.customer_name = false;
+                                    req.session.customer_email = false;
+                                    req.session.customer_phone = false;
+                                    req.session.customer_password = false;
+                                    req.session.referrel = false;
+                                    req.session.accountCreated = true;
+                                    res.redirect("/");
+                                  })
+                                  .catch((err) => {
+                                    console.log(err);
+                                  });
+                              })
+                              .catch((err) => {
+                                console.log(err);
+                              });
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            } else {
+              req.session.customer_name = false;
+              req.session.customer_email = false;
+              req.session.customer_phone = false;
+              req.session.customer_password = false;
+              req.session.referrel = false;
+              req.session.accountCreated = true;
+              res.redirect("/Customer/login");
+            }
           })
           .catch((err) => {
             req.session.emailExists = true;

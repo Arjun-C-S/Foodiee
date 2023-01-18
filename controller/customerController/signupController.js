@@ -26,6 +26,7 @@ exports.signUpPost = (req, res) => {
     { verificationPhone: true },
     { useFindAndModify: false }
   ).then((data) => {
+    console.log(data);
     if (!data) {
       res.redirect("/Customer/Verification");
     } else {
